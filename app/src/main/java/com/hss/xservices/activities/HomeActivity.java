@@ -1,18 +1,29 @@
 package com.hss.xservices.activities;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -22,11 +33,14 @@ import com.google.android.material.navigation.NavigationView;
 import com.hss.xservices.R;
 import com.hss.xservices.adapters.HomeAdapter;
 import com.hss.xservices.adapters.SliderAdapter;
+import com.schibstedspain.leku.LocationPickerActivity;
 import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.sucho.placepicker.AddressData;
 import com.sucho.placepicker.Constants;
+import com.sucho.placepicker.MapType;
 import com.sucho.placepicker.PlacePicker;
 
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -37,10 +51,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.Menu;
+import android.widget.TextView;
+
+import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.schibstedspain.leku.LocationPickerActivityKt.LATITUDE;
+import static com.schibstedspain.leku.LocationPickerActivityKt.LOCATION_ADDRESS;
+import static com.schibstedspain.leku.LocationPickerActivityKt.LONGITUDE;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -51,22 +73,15 @@ public class HomeActivity extends AppCompatActivity
     RecyclerView recyclerView;
     @BindView(R.id.imageSlider)
     SliderView sliderView;
+    double latitude, longitude;
+    @BindView(R.id.txt_location)
+    TextView txt_location;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
-        fusedLocationClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            // Logic to handle location object
-                        }
-                    }
-                });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -81,6 +96,7 @@ public class HomeActivity extends AppCompatActivity
         imageSlider();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new HomeAdapter(this));
+        getLocation();
 
     }
 
@@ -162,13 +178,69 @@ public class HomeActivity extends AppCompatActivity
         });
     }
 
+    private void getLocation(){
+        FusedLocationProviderClient fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+                            Log.e("latitude", "" + latitude);
+                            Log.e("longitude", "" + longitude);
+                            String address = getAddressFromLatLng(latitude,longitude);
+                            if (address != null) {
+                                txt_location.setText(address);
+                            }
+                        }
+                    }
+                });
+    }
+
     @OnClick(R.id.linear_location)
     public void onLocClick(View view){
-        Intent intent = new PlacePicker.IntentBuilder()
-                .setLatLong(40.748672, -73.985628)  // Initial Latitude and Longitude the Map will load into
-                .showLatLong(true)  // Show Coordinates in the Activity
-                .setMapZoom(12.0f)  // Map Zoom Level. Default: 14.0
-                .setAddressRequired(true).build(this);
-        startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
+        startActivityForResult(new LocationPickerActivity.Builder()
+                .withLocation(latitude, longitude).withSatelliteViewHidden().shouldReturnOkOnBackPressed()
+                .withGooglePlacesEnabled()
+                .build(this), 1);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            Log.e("RESULT****", "OK");
+            if (requestCode == 1) {
+                double latitude = data.getDoubleExtra(LATITUDE, 0.0);
+                Log.e("LATITUDE****", "" + latitude);
+                double longitude = data.getDoubleExtra(LONGITUDE, 0.0);
+                Log.e("LONGITUDE****", "" + longitude);
+                String address = data.getStringExtra(LOCATION_ADDRESS);
+                Log.e("ADDRESS****", "" + address);
+                if (address != null) {
+                    txt_location.setText(address);
+                }
+            }
+        }
+    }
+
+    public String getAddressFromLatLng(double latitude, double longitude) {
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(HomeActivity.this, Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            return addresses.get(0).getAddressLine(0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }

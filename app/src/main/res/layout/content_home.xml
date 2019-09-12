@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.HomeActivity"
     tools:showIn="@layout/app_bar_home">
@@ -24,8 +23,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0.3"
             android:gravity="center|center_vertical"
-            android:padding="8dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <ImageView
                 android:layout_width="30dp"
@@ -33,13 +32,14 @@
                 android:src="@drawable/location" />
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1.7"
-            android:padding="8dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="8dp">
 
             <com.hss.xservices.utils.CustomFontTextView
                 android:layout_width="wrap_content"
@@ -56,7 +56,9 @@
                     android:id="@+id/txt_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="#455, Hbr Layout, bangalore."
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
                     android:textColor="@color/black"
                     android:textStyle="bold" />
 
@@ -74,64 +76,62 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-            <com.smarteist.autoimageslider.SliderView
-                android:id="@+id/imageSlider"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:sliderAnimationDuration="1200"
-                app:sliderAutoCycleDirection="back_and_forth"
-                app:sliderAutoCycleEnabled="true"
-                app:sliderCircularHandlerEnabled="true"
-                app:sliderIndicatorAnimationDuration="1200"
-                app:sliderIndicatorGravity="center_horizontal|bottom"
-                app:sliderIndicatorMargin="15dp"
-                app:sliderIndicatorOrientation="horizontal"
-                app:sliderIndicatorPadding="3dp"
-                app:sliderIndicatorRadius="2dp"
-                app:sliderIndicatorSelectedColor="@color/colorAccent"
-                app:sliderIndicatorUnselectedColor="@color/white"
-                app:sliderScrollTimeInSec="2"
-                app:sliderStartAutoCycle="true" />
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="@color/colorAccent"
+            app:sliderIndicatorUnselectedColor="@color/white"
+            app:sliderScrollTimeInSec="4"
+            app:sliderStartAutoCycle="true" />
 
     </FrameLayout>
 
     <com.hss.xservices.utils.CustomFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:gravity="center"
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
         android:paddingRight="20dp"
-        android:textColor="@color/white"
-        android:layout_gravity="bottom"
-        android:gravity="center"
-        android:textSize="@dimen/textmed"
+        android:paddingBottom="10dp"
         android:text="Trusted Service Partner"
-        android:textStyle="bold"
-        android:background="@color/colorAccent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:textColor="@color/white"
+        android:textSize="@dimen/textmed"
+        android:textStyle="bold" />
 
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@color/white"
-        android:layout_height="match_parent">
+        android:orientation="vertical">
 
         <com.hss.xservices.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Services"
-            android:textStyle="bold"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/textmed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
             android:id="@+id/recyclerServices"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
