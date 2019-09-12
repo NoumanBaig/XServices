@@ -2,8 +2,12 @@ package com.hss.xservices.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -22,6 +26,8 @@ import com.smarteist.autoimageslider.IndicatorAnimations;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
+import com.sucho.placepicker.Constants;
+import com.sucho.placepicker.PlacePicker;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -34,9 +40,12 @@ import android.view.Menu;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FusedLocationProviderClient fusedLocationClient;
 
     @BindView(R.id.recyclerServices)
     RecyclerView recyclerView;
@@ -47,6 +56,17 @@ public class HomeActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            // Logic to handle location object
+                        }
+                    }
+                });
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
@@ -140,5 +160,15 @@ public class HomeActivity extends AppCompatActivity
                 sliderView.setCurrentPagePosition(position);
             }
         });
+    }
+
+    @OnClick(R.id.linear_location)
+    public void onLocClick(View view){
+        Intent intent = new PlacePicker.IntentBuilder()
+                .setLatLong(40.748672, -73.985628)  // Initial Latitude and Longitude the Map will load into
+                .showLatLong(true)  // Show Coordinates in the Activity
+                .setMapZoom(12.0f)  // Map Zoom Level. Default: 14.0
+                .setAddressRequired(true).build(this);
+        startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST);
     }
 }
