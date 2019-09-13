@@ -8,13 +8,15 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
+        android:name=".rest.AppControler"
         android:allowBackup="true"
         android:icon="@mipmap/logo_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/logo_launcher"
         android:supportsRtl="true"
         android:testOnly="false"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBgcEu7YMbVyRdouXhtAnRvOQ4C9i-pyjw"/>
