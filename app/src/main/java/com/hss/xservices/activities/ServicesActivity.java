@@ -31,4 +31,10 @@ public class ServicesActivity extends AppCompatActivity {
         ServicesAdapter servicesAdapter = new ServicesAdapter(this);
         recyclerView.setAdapter(servicesAdapter);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
