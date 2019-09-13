@@ -1,495 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?actionBarSize"
     android:orientation="vertical">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <LinearLayout
+        android:id="@+id/linear_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="5dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:weightSum="2">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical">
-
-                    <com.hss.xservices.utils.CustomFontTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Your Location" />
-
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:id="@+id/txt_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="#455, Hbr Layout, bangalore."
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            android:src="@drawable/ic_arrow_drop_down" />
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right|center_vertical"
-                    android:orientation="horizontal">
-
-
-                    <ImageView
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:layout_marginRight="15dp"
-                        android:src="@drawable/ic_shopping_cart" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-        </androidx.appcompat.widget.Toolbar>
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="@color/colorPrimary">
-
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_weight="0.3"
+            android:gravity="center|center_vertical"
+            android:orientation="horizontal"
+            android:padding="8dp">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/ic_search"
-                android:tint="@color/black" />
-
-            <com.hss.xservices.utils.CustomFontTextView
-                android:id="@+id/txt_search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="Search for a service"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                android:src="@drawable/location" />
 
         </LinearLayout>
 
-    </LinearLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:scrollbars="none">
-
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="@color/background"
-            android:orientation="vertical">
+            android:layout_weight="1.7"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="8dp">
 
-            <FrameLayout
+            <com.hss.xservices.utils.CustomFontTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Your are here" />
+
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-            <ImageView
-                android:scaleType="centerCrop"
-                android:layout_width="match_parent"
-                android:layout_height="220dp" />
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <com.hss.xservices.utils.CustomFontTextView
-                    android:paddingLeft="20dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:id="@+id/txt_offer_title"
-                    android:paddingRight="20dp"
-                    android:textColor="@color/white"
-                    android:layout_gravity="bottom"
-                    android:textSize="@dimen/textmed"
-                    android:text="Offer Title"
-                    android:textStyle="bold"
-                    android:background="#80000000"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </FrameLayout>
-            <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                    android:id="@+id/txt_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="marquee"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:weightSum="2"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="1.6"
-                            android:layout_width="0dp"
-                            android:textStyle="bold"
-                            android:padding="10dp"
-                            android:layout_marginStart="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textmed"
-                            android:text="Browse by Category"
-                            android:layout_height="wrap_content" />
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="0.4"
-                            android:layout_width="0dp"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:textColor="@color/colorAccent"
-                            android:text="See All"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerCategory"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:weightSum="2"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="1.6"
-                            android:layout_width="0dp"
-                            android:textStyle="bold"
-                            android:padding="10dp"
-                            android:layout_marginStart="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textmed"
-                            android:text="Weekly Featured"
-                            android:layout_height="wrap_content" />
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="0.4"
-                            android:layout_width="0dp"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:textColor="@color/colorAccent"
-                            android:text="See All"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerWeekly"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                </LinearLayout>
-
-                <View
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray"/>
-
-
-                <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <LinearLayout
-                        android:weightSum="2"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="1.6"
-                            android:layout_width="0dp"
-                            android:textStyle="bold"
-                            android:padding="10dp"
-                            android:layout_marginStart="10dp"
-                            android:textColor="@color/black"
-                            android:textSize="@dimen/textmed"
-                            android:text="Best Sellers"
-                            android:layout_height="wrap_content" />
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:layout_weight="0.4"
-                            android:layout_width="0dp"
-                            android:padding="10dp"
-                            android:gravity="center"
-                            android:textColor="@color/colorAccent"
-                            android:text="See All"
-                            android:textStyle="bold"
-                            android:layout_height="wrap_content" />
-
-                    </LinearLayout>
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerSellers"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                    </androidx.recyclerview.widget.RecyclerView>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:padding="40dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    android:background="@color/black"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                    <ImageView
-                        android:scaleType="centerCrop"
-                        android:layout_width="match_parent"
-                        android:layout_height="220dp" />
-
-                    <com.hss.xservices.utils.CustomFontTextView
-                        android:padding="10dp"
-                        android:text="Title"
-                        android:textSize="@dimen/textmed"
-                        android:textColor="@color/white"
-                        android:textStyle="bold"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <com.hss.xservices.utils.CustomFontTextView
-                        android:text="Lorem ipsum description goes here.Lorem ipsum description goes here.Lorem ipsum description goes here.Lorem ipsum description goes here"
-                        android:textSize="@dimen/textmed"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-
-                    <com.hss.xservices.utils.CustomFontTextView
-                        android:padding="10dp"
-                        android:layout_marginTop="10dp"
-                        android:text="Read more"
-                        android:textSize="@dimen/textmed"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        android:gravity="end"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-
-
-                </LinearLayout>
-
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_arrow_drop_down" />
 
             </LinearLayout>
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:weightSum="2">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:weightSum="2">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:weightSum="2">-->
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-                <!--<LinearLayout-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="140dp"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:orientation="vertical">-->
-
-                    <!--<androidx.cardview.widget.CardView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_margin="5dp"-->
-                        <!--android:elevation="5dp"-->
-                        <!--android:orientation="vertical">-->
-
-                    <!--</androidx.cardview.widget.CardView>-->
-
-
-                <!--</LinearLayout>-->
-
-
-            <!--</LinearLayout>-->
-
-
         </LinearLayout>
+    </LinearLayout>
 
-    </ScrollView>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <com.smarteist.autoimageslider.SliderView
+            android:id="@+id/imageSlider"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:sliderAutoCycleDirection="back_and_forth"
+            app:sliderAutoCycleEnabled="true"
+            app:sliderCircularHandlerEnabled="true"
+            app:sliderIndicatorGravity="center_horizontal|bottom"
+            app:sliderIndicatorMargin="15dp"
+            app:sliderIndicatorOrientation="horizontal"
+            app:sliderIndicatorPadding="3dp"
+            app:sliderIndicatorRadius="2dp"
+            app:sliderIndicatorSelectedColor="@color/colorAccent"
+            app:sliderIndicatorUnselectedColor="@color/white"
+            app:sliderScrollTimeInSec="4"
+            app:sliderStartAutoCycle="true" />
+
+    </FrameLayout>
+
+    <com.hss.xservices.utils.CustomFontTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:text="Trusted Service Partner"
+        android:textColor="@color/white"
+        android:textSize="@dimen/textmed"
+        android:textStyle="bold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <com.hss.xservices.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Services"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textmed"
+            android:textStyle="bold" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerServices"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
 
 </LinearLayout>
