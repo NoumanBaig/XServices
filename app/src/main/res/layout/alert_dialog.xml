@@ -41,7 +41,7 @@
         android:textColor="@color/black"
         android:textSize="@dimen/textmed" />
 
-    <com.hss.xservices.utils.CustomFontTextView
+    <com.hss.xservices.utils.CustomFontButton
         android:id="@+id/dialog_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

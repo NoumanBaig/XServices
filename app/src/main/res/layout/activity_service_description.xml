@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".activities.ServiceDescriptionActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/toolbar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <ImageView
+                android:id="@+id/img"
+                android:scaleType="fitXY"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+            <com.hss.xservices.utils.CustomFontTextView
+                android:gravity="center"
+                android:id="@+id/txt_title"
+                android:layout_gravity="bottom"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+
+
+        <androidx.cardview.widget.CardView
+            app:cardCornerRadius="10dp"
+            app:cardElevation="5dp"
+            app:cardBackgroundColor="@color/background"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/service_name"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/colon"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:textColor="@color/black"
+                            android:id="@+id/txt_serviceName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/service_desc"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/colon"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:textColor="@color/black"
+                            android:id="@+id/txt_serviceDesc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/price"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/colon"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:textColor="@color/black"
+                            android:id="@+id/txt_servicePrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:weightSum="2"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/notes"
+                            android:textStyle="bold"
+                            android:gravity="center"
+                            android:textColor="@color/black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="0.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:text="@string/colon"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_weight="1.1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content">
+
+                        <com.hss.xservices.utils.CustomFontTextView
+                            android:textColor="@color/black"
+                            android:id="@+id/txt_serviceNotes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.hss.xservices.utils.CustomFontButton
+            android:background="@drawable/button_background"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            android:id="@+id/btn_proceed"
+            android:text="@string/proceed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</LinearLayout>

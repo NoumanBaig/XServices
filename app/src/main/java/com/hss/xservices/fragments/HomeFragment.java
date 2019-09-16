@@ -63,6 +63,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
 
+        ButterKnife.bind(this,view);
         sliderView = view.findViewById(R.id.imageSlider);
         recyclerView = view.findViewById(R.id.recyclerServices);
         txt_location = view.findViewById(R.id.txt_location);

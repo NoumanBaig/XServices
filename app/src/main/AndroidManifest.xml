@@ -19,7 +19,12 @@
         android:testOnly="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.ServicesActivity"></activity>
+        <activity android:name=".activities.MyOrdersActivity"></activity>
+        <activity android:name=".activities.OrderSummaryActivity" />
+        <activity android:name=".activities.ScheduleActivity" />
+        <activity android:name=".activities.ProceedActivity" />
+        <activity android:name=".activities.ServiceDescriptionActivity" />
+        <activity android:name=".activities.ServicesActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -28,7 +33,7 @@
         <activity
             android:name=".activities.HomeActivity"
             android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activities.SearchActivity"
             android:windowSoftInputMode="adjustResize" />

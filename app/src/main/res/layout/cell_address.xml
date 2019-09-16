@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    app:cardCornerRadius="10dp"
+    app:cardBackgroundColor="@color/background"
+    app:cardElevation="3dp"
+    app:cardUseCompatPadding="true"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:id="@+id/cardview"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="1.6"
+            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_home_address"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp" />
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:text="Work"
+                    android:textStyle="bold"
+                    android:id="@+id/txt"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:text="Nouman"
+                    android:id="@+id/txt_name"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"/>
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:text="9987654321"
+                    android:id="@+id/txt_mobile"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <com.hss.xservices.utils.CustomFontTextView
+                android:padding="10dp"
+                android:id="@+id/txt_address"
+                android:text="Address: hbr layout bangalore india karnataka 506602"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_weight="0.4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="match_parent">
+
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:background="@drawable/round_background_two"
+                android:layout_width="25dp"
+                android:layout_height="25dp">
+
+                <ImageView
+                    android:src="@drawable/ic_edit"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:background="@drawable/round_background_two"
+                android:layout_width="25dp"
+                android:layout_height="25dp">
+
+                <ImageView
+                    android:src="@drawable/ic_delete"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
