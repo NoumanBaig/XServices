@@ -3,11 +3,14 @@ package com.hss.xservices.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.hss.xservices.R;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
@@ -19,7 +22,6 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(getResources().getString(R.string.order_summary));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
@@ -28,5 +30,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @OnClick(R.id.btn_confirmOrder)
+    public void onConfirmClick(View view){
+        startActivity(new Intent(this,MyOrdersActivity.class));
     }
 }

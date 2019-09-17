@@ -50,6 +50,19 @@
     <string name="add_photo">Add Photo</string>
     <string name="cus_notes">Customer Notes :</string>
     <string name="order_summary">Order Summary</string>
+    <string name="service_name2">Service Name :</string>
+    <string name="service_desc2">Service Description :</string>
+    <string name="have_promo">Have a promo code?</string>
+    <string name="submit">Submit</string>
+    <string name="total_pay_amt">Total Payable Amount</string>
+    <string name="service_cost">Service Cost</string>
+    <string name="taxes">Taxes</string>
+    <string name="scheduled_date_time">Scheduled Date and Time</string>
+    <string name="contact_dts">Contact Details</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="order_no">Order No :</string>
+    <string name="booked_on">Booked On :</string>
+    <!--<string name="total_pay_amt"></string>-->
 
 
     <string name="menu_home">Home</string>
