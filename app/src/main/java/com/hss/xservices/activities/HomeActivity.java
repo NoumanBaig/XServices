@@ -98,17 +98,10 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 fragment = new HomeFragment();
                 break;
-            case R.id.nav_gallery:
+            case R.id.nav_my_orders:
                 break;
-            case R.id.nav_slideshow:
+            case R.id.nav_logout:
                 break;
-            case R.id.nav_tools:
-                break;
-            case R.id.nav_share:
-                break;
-            case R.id.nav_send:
-                break;
-
         }
 
 
