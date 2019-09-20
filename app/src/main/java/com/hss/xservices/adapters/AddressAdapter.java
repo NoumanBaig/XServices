@@ -40,7 +40,7 @@ public class AddressAdapter extends RecyclerView.Adapter<AddressAdapter.Category
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 1;
     }
 
     class CategoryViewholder extends RecyclerView.ViewHolder{

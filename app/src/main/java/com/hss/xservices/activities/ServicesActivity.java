@@ -27,6 +27,7 @@ import com.hss.xservices.models.Services;
 import com.hss.xservices.models.ServicesCategory;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
+import com.hss.xservices.utils.Prefs;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -72,6 +73,7 @@ public class ServicesActivity extends AppCompatActivity {
             Log.e("str_image",str_image);
             Log.e("str_title",str_title);
 
+            Prefs.with(ServicesActivity.this).save("main_title",str_title);
             Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(imageView);
             txt_title.setText(str_title);
 
@@ -134,8 +136,8 @@ public class ServicesActivity extends AppCompatActivity {
 
                             JSONArray jsonArray = object.getJSONArray("photos");
                             if (jsonArray.length()>0){
-                                for (int j=0; j>jsonArray.length(); j++){
-                                    JSONObject object1 = jsonArray.getJSONObject(i);
+                                for (int j=0; j<jsonArray.length(); j++){
+                                    JSONObject object1 = jsonArray.getJSONObject(j);
                                     Photo photo = new Photo();
                                     photo.setSvcPhotoId(object1.optInt("svcPhotoId"));
                                     photo.setPhotoFileName(object1.optString("photoFileName"));
@@ -143,7 +145,6 @@ public class ServicesActivity extends AppCompatActivity {
                                     photos_list.add(photo);
                                 }
                             }
-
                             services.setPhotos(photos_list);
                             categoryList.add(services);
                         }

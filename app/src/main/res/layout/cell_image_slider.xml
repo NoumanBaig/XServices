@@ -5,10 +5,10 @@
     android:orientation="vertical">
 
     <ImageView
+        android:padding="5dp"
         android:id="@+id/iv_auto_image_slider"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY" />
+        android:layout_height="match_parent"/>
 
 
     <!--<ImageView-->

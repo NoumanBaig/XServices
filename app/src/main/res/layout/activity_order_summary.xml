@@ -25,7 +25,7 @@
 
                 <ImageView
                     android:id="@+id/img"
-                    android:scaleType="fitXY"
+                    android:padding="5dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />
 
@@ -33,7 +33,7 @@
                     android:gravity="center"
                     android:id="@+id/txt_title"
                     android:layout_gravity="bottom"
-                    android:background="@color/colorAccent"
+                    android:background="@color/transparent2"
                     android:textColor="@color/white"
                     android:textStyle="bold"
                     android:padding="10dp"
@@ -231,7 +231,7 @@
                             <com.hss.xservices.utils.CustomFontTextView
                                 android:text="CAD 200"
                                 android:textStyle="bold"
-                                android:id="@+id/txt_amount"
+                                android:id="@+id/txt_servicePrice"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -437,7 +437,7 @@
                             android:layout_height="wrap_content">
 
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="Samantha"
+                                android:text="Nouman"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -452,7 +452,7 @@
                             android:layout_height="wrap_content">
 
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="Address full present address"
+                                android:text="Address: hbr layout bangalore"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -476,7 +476,7 @@
                             android:layout_height="wrap_content">
 
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="998775553222"
+                                android:text="9987654321"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
@@ -491,7 +491,7 @@
                             android:layout_height="wrap_content">
 
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="bangalore karnataka"
+                                android:text="506602 karnataka india"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />

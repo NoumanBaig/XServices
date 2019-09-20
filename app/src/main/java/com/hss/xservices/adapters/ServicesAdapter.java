@@ -25,6 +25,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
 
     Context mContext;
     List<ServicesCategory> categoryList;
+    String image_url,description;
 //    OnCardClickListner onCardClickListner;
     public ServicesAdapter(Context context,List<ServicesCategory> categoryList) {
         this.mContext=context;
@@ -42,16 +43,16 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
 
         holder.txt_name.setText(""+categoryList.get(position).getSvcTitle());
-        String description = categoryList.get(position).getSvcDescription();
+         description = categoryList.get(position).getSvcDescription();
         if(!description.equals("null")){
             holder.txt_desc.setText(""+description);
         }
 
 //        if (categoryList.get(position).getPhotos().get(position).getPhotoFileName())
         try {
-            String image_url = "http://3.83.243.193:3000/files/"+categoryList.get(position).getPhotos().get(0).getPhotoFileName();
-            Log.e("image_url",image_url);
-            Picasso.get().load(image_url).error(R.drawable.service).into(holder.imageView);
+             image_url = categoryList.get(position).getPhotos().get(0).getPhotoFileName();
+            Log.e("image_url-->",image_url);
+            Picasso.get().load("http://3.83.243.193:3000/files/"+image_url).error(R.drawable.service).into(holder.imageView);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -62,13 +63,21 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
             @Override
             public void onClick(View v) {
 //                onCardClickListner.OnCardClicked(v, position);
-                mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class));
+                mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class)
+                .putExtra("image",image_url)
+                        .putExtra("title",""+categoryList.get(position).getSvcTitle())
+                        .putExtra("description",description)
+                        .putExtra("price","$"+categoryList.get(position).getHourRate()));
             }
         });
         holder.btn_buy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class));
+                mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class)
+                        .putExtra("image",image_url)
+                        .putExtra("title",""+categoryList.get(position).getSvcTitle())
+                        .putExtra("description",description)
+                        .putExtra("price","$"+categoryList.get(position).getHourRate()));
             }
         });
     }

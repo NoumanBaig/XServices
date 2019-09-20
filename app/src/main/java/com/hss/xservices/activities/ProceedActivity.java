@@ -8,10 +8,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.hss.xservices.R;
 import com.hss.xservices.adapters.AddressAdapter;
 import com.hss.xservices.adapters.ServicesAdapter;
+import com.hss.xservices.utils.Prefs;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,8 +23,13 @@ import butterknife.OnClick;
 
 public class ProceedActivity extends AppCompatActivity {
 
+    @BindView(R.id.img)
+    ImageView img;
+    @BindView(R.id.txt_title)
+    TextView txt_title;
     @BindView(R.id.recyclerAddress)
     RecyclerView recyclerView;
+    String str_title,str_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,14 @@ public class ProceedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        if (getIntent().getExtras() != null){
+            str_image = getIntent().getStringExtra("image");
+            str_title = getIntent().getStringExtra("title");
+
+            Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
+            txt_title.setText(str_title);
+        }
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         AddressAdapter addressAdapter = new AddressAdapter(this);
