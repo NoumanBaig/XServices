@@ -26,11 +26,12 @@ public class EmailSocialLoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
+//    @Override
+//    public boolean onSupportNavigateUp() {
+//        onBackPressed();
+//        return true;
+//    }
+
     @OnClick(R.id.btn_sign_in)
     public void onClick(View view){
         startActivity(new Intent(this,MainActivity.class));
