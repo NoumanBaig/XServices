@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.navigation.NavigationView;
 import com.hss.xservices.R;
 import com.hss.xservices.fragments.HomeFragment;
+import com.hss.xservices.models.Profile;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
 import com.hss.xservices.utils.Prefs;
@@ -118,7 +119,7 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_my_orders:
-                startActivity(new Intent(HomeActivity.this,MyOrdersActivity.class));
+                startActivity(new Intent(HomeActivity.this, MyOrdersActivity.class));
                 break;
             case R.id.nav_logout:
                 break;
@@ -136,24 +137,36 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-        private void getProfile(){
+    private void getProfile() {
 
-        String token = Prefs.with(HomeActivity.this).getString("token","");
-            Log.e("token",""+token);
+        String token = Prefs.with(HomeActivity.this).getString("token", "");
+        Log.e("token", "" + token);
 
         StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
                 Constants.BASE_URL + "/customer/profile", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                Log.e("getProfile",""+response);
+                Log.e("getProfile", "" + response);
 
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
-
+                    JSONObject jsonObject2 = jsonObject.getJSONObject("response");
+                    String code = jsonObject2.optString("code");
+                    if (code.equalsIgnoreCase("OK")){
+                       JSONObject data = jsonObject2.getJSONObject("data");
+                       JSONObject profile_obj = data.getJSONObject("profile");
+                        Profile profile = new Profile();
+                        profile.setUserId(profile_obj.optInt("userId"));
+                        profile.setUserId(profile_obj.optInt("userType"));
+                        profile.setUserId(profile_obj.optInt("userRole"));
+                        profile.setUserId(profile_obj.optInt("gender"));
+                    }else {
+                        Log.e("not OK","-->");
+                    }
                 } catch (JSONException e) {
 
-                    Log.e("JSONException",""+e);
+                    Log.e("JSONException", "" + e);
                     e.printStackTrace();
                 }
             }
@@ -171,7 +184,7 @@ public class HomeActivity extends AppCompatActivity
                         errorMessage = "Failed to connect to server";
                     }
                 }
-               // Toast.makeText(getActivity(), ""+errorMessage, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getActivity(), ""+errorMessage, Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
