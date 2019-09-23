@@ -63,6 +63,20 @@
     <string name="order_no">Order No :</string>
     <string name="booked_on">Booked On :</string>
     <string name="my_orders">My Orders</string>
+    <string name="first_name">First Name</string>
+    <string name="middle_name">Middle Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="email">Email ID</string>
+    <string name="gender">Gender</string>
+    <string name="dob">DOB</string>
+    <string name="address1">Address 1</string>
+    <string name="address2">Address 2</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="province">Province</string>
+    <string name="country">Country</string>
+    <string name="pincode">Pincode</string>
+    <string name="landmark">Land Mark</string>
     <!--<string name="total_pay_amt"></string>-->
 
 

@@ -65,6 +65,7 @@ public class ProceedActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_addAddress:
+                startActivity(new Intent(this, ProfileActivity.class));
                 break;
             case R.id.btn_schedule:
                 startActivity(new Intent(this, ScheduleActivity.class));

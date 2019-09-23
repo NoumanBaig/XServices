@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="80dp"
+    android:orientation="vertical"
+    android:background="@drawable/edittext_background"
+    android:gravity="center"
+    android:layout_margin="5dp"
+    android:layout_height="80dp">
+
+    <FrameLayout
+        android:layout_margin="1dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/img"
+            android:scaleType="fitXY"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!--<TextView-->
+            <!--android:id="@+id/txt"-->
+            <!--android:text="50% off"-->
+            <!--android:padding="5dp"-->
+            <!--android:gravity="center"-->
+            <!--android:textColor="@color/white"-->
+            <!--android:background="@color/transperant_black2"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content" />-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/img_delete"-->
+            <!--android:layout_gravity="right"-->
+            <!--android:scaleType="fitXY"-->
+            <!--app:srcCompat="@drawable/ic_cancel"-->
+            <!--android:layout_margin="2dp"-->
+            <!--android:layout_width="25dp"-->
+            <!--android:layout_height="25dp"-->
+            <!--tools:ignore="RtlHardcoded" />-->
+    </FrameLayout>
+
+</LinearLayout>

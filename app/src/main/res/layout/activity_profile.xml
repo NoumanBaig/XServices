@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".activities.ProfileActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <androidx.core.widget.NestedScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/first_name"
+                android:id="@+id/edt_firstName"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/middle_name"
+                android:id="@+id/edt_middleName"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/last_name"
+                android:id="@+id/edt_lastName"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/email"
+                android:id="@+id/edt_email"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+           <Spinner
+               android:id="@+id/spinner"
+               android:layout_marginTop="5dp"
+               android:background="@drawable/edittext_background2"
+               android:layout_marginBottom="5dp"
+               android:layout_width="match_parent"
+               android:layout_height="40dp">
+
+           </Spinner>
+
+            <com.hss.xservices.utils.CustomFontTextView
+                android:hint="@string/dob"
+                android:id="@+id/txt_dob"
+                android:background="@drawable/edittext_background2"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:paddingRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/address1"
+                android:id="@+id/edt_address1"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/address2"
+                android:id="@+id/edt_address2"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/city"
+                android:id="@+id/edt_city"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/province"
+                android:id="@+id/edt_province"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/country"
+                android:id="@+id/edt_country"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/pincode"
+                android:id="@+id/edt_pincode"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:hint="@string/landmark"
+                android:id="@+id/edt_landmark"
+                android:imeOptions="actionNext"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:inputType="textPersonName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <com.hss.xservices.utils.CustomFontButton
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:id="@+id/btn_submit"
+                android:background="@color/colorAccent"
+                android:textColor="@color/white"
+                android:text="@string/submit"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

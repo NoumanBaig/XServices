@@ -6,11 +6,23 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.navigation.NavigationView;
 import com.hss.xservices.R;
 import com.hss.xservices.fragments.HomeFragment;
+import com.hss.xservices.rest.AppControler;
+import com.hss.xservices.utils.Constants;
+import com.hss.xservices.utils.Prefs;
 
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -20,6 +32,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 
@@ -43,7 +62,7 @@ public class HomeActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
-
+        getProfile();
         ShowFragment(R.id.nav_home);
 
 
@@ -99,6 +118,7 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new HomeFragment();
                 break;
             case R.id.nav_my_orders:
+                startActivity(new Intent(HomeActivity.this,MyOrdersActivity.class));
                 break;
             case R.id.nav_logout:
                 break;
@@ -115,5 +135,54 @@ public class HomeActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
     }
 
+
+        private void getProfile(){
+
+        String token = Prefs.with(HomeActivity.this).getString("token","");
+            Log.e("token",""+token);
+
+        StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
+                Constants.BASE_URL + "/customer/profile", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("getProfile",""+response);
+
+                try {
+                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
+
+                } catch (JSONException e) {
+
+                    Log.e("JSONException",""+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("F_resAdsList", "" + error);
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Failed to connect to server";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect to server";
+                    }
+                }
+               // Toast.makeText(getActivity(), ""+errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", token);
+                return headers;
+            }
+        };
+        AppControler.getInstance().addToRequestQueue(jsonObjReq, "get_profile");
+    }
 
 }
