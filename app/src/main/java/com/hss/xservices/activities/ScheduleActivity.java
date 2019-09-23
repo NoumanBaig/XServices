@@ -9,10 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,8 +27,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.hss.xservices.R;
+import com.hss.xservices.utils.Constants;
+import com.hss.xservices.utils.Prefs;
+import com.hss.xservices.utils.VolleyMultipartRequest;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -37,11 +51,22 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,6 +93,7 @@ public class ScheduleActivity extends AppCompatActivity {
     String imageEncoded;
     List<Uri> uriArrayList = new ArrayList<>();
     ArrayList<Uri> mArrayUriGallery = new ArrayList<Uri>();
+    ArrayList<String> arr_fileName,arr_originalName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,7 +159,9 @@ public class ScheduleActivity extends AppCompatActivity {
             case R.id.btn_continue:
                 startActivity(new Intent(this, OrderSummaryActivity.class)
                         .putExtra("date", str_day)
-                        .putExtra("time", str_time));
+                        .putExtra("time", str_time)
+                .putStringArrayListExtra("arr_fileName",arr_fileName)
+                        .putStringArrayListExtra("arr_originalName",arr_originalName));
                 break;
             case R.id.layout_addPhoto:
                 requestPermission();
@@ -264,6 +292,7 @@ public class ScheduleActivity extends AppCompatActivity {
 //                    ArrayList<Uri> mArrayUri = new ArrayList<Uri>();
                 mArrayUriGallery.add(mImageUri);
                 Log.e("offers", "mArrayUri" + mArrayUriGallery);
+                uploadPics();
 //                    int arr_size=0;
 //                    arr_size=uriArrayList.size();
 //                    if (arr_size <= 4){
@@ -314,6 +343,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
                     }
                     Log.e("LOG_TAG", "Selected Images" + mArrayUriGallery.size());
+                    uploadPics();
 //                        if (imagesEncodedList.size() <= 4 && uriArrayList.size() <= 4) {
                     LinearLayoutManager layoutManager2 = new LinearLayoutManager(ScheduleActivity.this, LinearLayoutManager.HORIZONTAL, false);
                     recyclerView.setLayoutManager(layoutManager2);
@@ -329,12 +359,6 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public class GalleryAdapter extends RecyclerView.Adapter<GalleryAdapter.MyViewHolder> {
 
-        String containsString;
-
-//        public GalleryAdapter(String containsString) {
-//            this.containsString=containsString;
-//        }
-
         @NonNull
         @Override
         public GalleryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -345,64 +369,166 @@ public class ScheduleActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(@NonNull GalleryAdapter.MyViewHolder myViewHolder, int i) {
-
-//            if (containsString != null){
-//                Picasso.with(PicturePreviewActivity.this).load(images_arr.get(i)).resize(160,160).centerCrop().into(myViewHolder.imageView);
-//                myViewHolder.imageView_delete.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        images_arr.remove(i);
-//                        notifyDataSetChanged();
-//                        Log.e("images_arr",""+images_arr);
-//                    }
-//                });
-//            }else {
-//                Picasso.with(PicturePreviewActivity.this).load(mArrayUriGallery.get(i)).resize(160,160).centerCrop().into(myViewHolder.imageView);
-//                myViewHolder.imageView_delete.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        mArrayUriGallery.remove(i);
-//                        notifyDataSetChanged();
-//                        Log.e("mArrayUriGallery",""+mArrayUriGallery);
-//                    }
-//                });
-//            }
-
             Picasso.get().load(mArrayUriGallery.get(i)).resize(160, 160).centerCrop().into(myViewHolder.imageView);
-//            myViewHolder.imageView_delete.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    mArrayUriGallery.remove(i);
-//                    notifyDataSetChanged();
-//                    Log.e("mArrayUriGallery", "" + mArrayUriGallery);
-//                }
-//            });
-
-
         }
 
         @Override
         public int getItemCount() {
-//            if (containsString != null){
-//                return images_arr.size();
-//            }else {
-//                return mArrayUriGallery.size();
-//            }
             return mArrayUriGallery.size();
         }
 
         class MyViewHolder extends RecyclerView.ViewHolder {
-
-            //        TextView textView;
             ImageView imageView, imageView_delete;
-
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
-//            textView = itemView.findViewById(R.id.txt);
                 imageView = itemView.findViewById(R.id.img);
-//                imageView_delete = itemView.findViewById(R.id.img_delete);
             }
         }
     }
+
+
+    private void uploadPics() {
+        //getting the tag from the edittext
+        //final String tags = editTextTags.getText().toString().trim();
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+        progressDialog.setCancelable(false);
+
+        //our custom volley request
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, Constants.BASE_URL+"/file/upload",
+                new Response.Listener<NetworkResponse>() {
+                    @Override
+                    public void onResponse(NetworkResponse response) {
+                        progressDialog.dismiss();
+                        arr_fileName = new ArrayList<>();
+                        arr_originalName = new ArrayList<>();
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(new String(response.data));
+                            Log.e("ResponceProductUpload", String.valueOf(jsonObject));
+                            JSONObject res_obj = jsonObject.getJSONObject("response");
+                            String code = res_obj.optString("code");
+                            String message = res_obj.optString("message");
+                            Toast.makeText(ScheduleActivity.this, message, Toast.LENGTH_SHORT).show();
+                            if (code.equalsIgnoreCase("OK")){
+                                JSONObject data_obj = res_obj.getJSONObject("data");
+                                JSONArray array = data_obj.getJSONArray("files");
+                                for (int i=0; i<array.length(); i++){
+                                    JSONObject object = array.getJSONObject(i);
+                                    arr_fileName.add(object.optString("originalname"));
+                                    arr_originalName.add(object.optString("filename"));
+                                }
+                                Log.e("arr_fileName", ""+arr_fileName);
+                                Log.e("arr_originalName", ""+arr_originalName);
+                            }
+
+                        } catch (JSONException e) {
+                            progressDialog.dismiss();
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("Exeption", error.toString());
+                    }
+                }) {
+
+            /*
+             * If you want to add more parameters with the image
+             * you can do it here
+             * here we have only one parameter with the image
+             * which is tags
+             * */
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                return params;
+            }
+
+            //This is for Headers If You Needed
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("token", Prefs.with(ScheduleActivity.this).getString("token", ""));
+                return params;
+            }
+
+            /*
+             * Here we are passing image by renaming it with a unique name
+             * */
+            @Override
+            protected Map<String, DataPart> getByteData() {
+                Map<String, DataPart> params = new HashMap<>();
+                for (int wor = 0; wor < mArrayUriGallery.size(); wor++) {
+                    //Bitmap bitmapImageUpload_multiple = BitmapFactory.decodeFile(imgFile.get(wor).getAbsolutePath());
+                    try {
+                        String imagename_m = "multi_" + System.currentTimeMillis();
+                        Bitmap bitmaps = getThumbnail(mArrayUriGallery.get(wor));
+                        // Bitmap resized = Bitmap.createScaledBitmap(bitmaps, 10, 10, true);
+                        params.put("files[]", new DataPart(imagename_m + ".png", getFileDataFromDrawable(bitmaps)));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //  params.put("image[0]", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                //  params.put("image[1]", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
+                return params;
+            }
+        };
+
+        volleyMultipartRequest.setRetryPolicy(new DefaultRetryPolicy(
+                10000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        //adding the request to volley
+        Volley.newRequestQueue(this).add(volleyMultipartRequest);
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public Bitmap getThumbnail(Uri uri) throws FileNotFoundException, IOException {
+        InputStream input = ScheduleActivity.this.getContentResolver().openInputStream(uri);
+
+        BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+        onlyBoundsOptions.inJustDecodeBounds = true;
+        onlyBoundsOptions.inDither = true;//optional
+        onlyBoundsOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//optional
+        BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+        input.close();
+
+        if ((onlyBoundsOptions.outWidth == -1) || (onlyBoundsOptions.outHeight == -1)) {
+            return null;
+        }
+
+        int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ? onlyBoundsOptions.outHeight : onlyBoundsOptions.outWidth;
+
+        double ratio = (originalSize > originalSize) ? (originalSize / originalSize) : 1.0;
+
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
+        bitmapOptions.inDither = true; //optional
+        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;//
+        input = ScheduleActivity.this.getContentResolver().openInputStream(uri);
+        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+        input.close();
+        return bitmap;
+    }
+
+    private static int getPowerOfTwoForSampleRatio(double ratio) {
+        int k = Integer.highestOneBit((int) Math.floor(ratio));
+        if (k == 0) return 1;
+        else return k;
+    }
+
 
 }

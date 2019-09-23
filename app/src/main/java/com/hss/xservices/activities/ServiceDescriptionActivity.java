@@ -73,7 +73,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             str_desc = getIntent().getStringExtra("description");
             str_price = getIntent().getStringExtra("price");
 
-            //getDetails(str_id);
+            getDetails(str_id);
 
             Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
             txt_title.setText(str_title);
@@ -82,6 +82,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             txt_servicePrice.setText(str_price);
             txt_serviceNotes.setText("NIL");
 
+            Prefs.with(ServiceDescriptionActivity.this).save("str_id",str_id);
             Prefs.with(ServiceDescriptionActivity.this).save("image",str_image);
             Prefs.with(ServiceDescriptionActivity.this).save("title",str_title);
             Prefs.with(ServiceDescriptionActivity.this).save("description",str_desc);
@@ -141,7 +142,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                headers.put("Authorization", Prefs.with(ServiceDescriptionActivity.this).getString("token",""));
+                headers.put("token", Prefs.with(ServiceDescriptionActivity.this).getString("token",""));
                 return headers;
             }
         };

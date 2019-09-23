@@ -31,15 +31,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <com.hss.xservices.utils.CustomFontEditText
-                android:hint="@string/middle_name"
-                android:id="@+id/edt_middleName"
-                android:imeOptions="actionNext"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:inputType="textPersonName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+            <!--<com.hss.xservices.utils.CustomFontEditText-->
+                <!--android:hint="@string/middle_name"-->
+                <!--android:id="@+id/edt_middleName"-->
+                <!--android:imeOptions="actionNext"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginBottom="5dp"-->
+                <!--android:inputType="textPersonName"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content" />-->
 
             <com.hss.xservices.utils.CustomFontEditText
                 android:hint="@string/last_name"
@@ -61,9 +61,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            <com.hss.xservices.utils.CustomFontTextView
+                android:text="@string/gender"
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
            <Spinner
                android:id="@+id/spinner"
-               android:layout_marginTop="5dp"
                android:background="@drawable/edittext_background2"
                android:layout_marginBottom="5dp"
                android:layout_width="match_parent"

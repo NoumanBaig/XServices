@@ -132,6 +132,7 @@ public class ServicesActivity extends AppCompatActivity {
                             services.setSvcTitle(object.optString("svcTitle"));
                             services.setSvcDescription(object.optString("svcDescription"));
                             services.setHourRate(object.optString("hourRate"));
+                            services.setSvcSla(object.optString("svcSla"));
 
 
                             JSONArray jsonArray = object.getJSONArray("photos");

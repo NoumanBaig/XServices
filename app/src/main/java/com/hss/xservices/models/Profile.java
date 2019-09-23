@@ -25,7 +25,7 @@ public class Profile {
     private String addOn;
     private Object editBy;
     private String editOn;
-    private List<Object> addressess = null;
+    private List<Addresses> addressess = null;
 
     public Integer getUserId() {
         return userId;
@@ -203,11 +203,11 @@ public class Profile {
         this.editOn = editOn;
     }
 
-    public List<Object> getAddressess() {
+    public List<Addresses> getAddressess() {
         return addressess;
     }
 
-    public void setAddressess(List<Object> addressess) {
+    public void setAddressess(List<Addresses> addressess) {
         this.addressess = addressess;
     }
 

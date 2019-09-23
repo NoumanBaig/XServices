@@ -43,7 +43,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
 
         holder.txt_name.setText(""+categoryList.get(position).getSvcTitle());
-         description = categoryList.get(position).getSvcDescription();
+         description = categoryList.get(position).getSvcSla();
         if(!description.equals("null")){
             holder.txt_desc.setText(""+description);
         }
@@ -65,7 +65,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
 //                onCardClickListner.OnCardClicked(v, position);
                 mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class)
                 .putExtra("image",image_url)
-                        .putExtra("id",""+categoryList.get(position).getSvcCatg())
+                        .putExtra("id",""+categoryList.get(position).getSvcId())
                         .putExtra("title",""+categoryList.get(position).getSvcTitle())
                         .putExtra("description",description)
                         .putExtra("price","$"+categoryList.get(position).getHourRate()));
@@ -76,7 +76,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
             public void onClick(View v) {
                 mContext.startActivity(new Intent(mContext, ServiceDescriptionActivity.class)
                         .putExtra("image",image_url)
-                        .putExtra("id",""+categoryList.get(position).getSvcCatg())
+                        .putExtra("id",""+categoryList.get(position).getSvcId())
                         .putExtra("title",""+categoryList.get(position).getSvcTitle())
                         .putExtra("description",description)
                         .putExtra("price","$"+categoryList.get(position).getHourRate()));

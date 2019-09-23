@@ -190,6 +190,7 @@
                     <LinearLayout
                         android:orientation="horizontal"
                         android:weightSum="2"
+                        android:gravity="center_vertical"
                         android:layout_marginBottom="8dp"
                         android:layout_marginTop="8dp"
                         android:layout_width="match_parent"
@@ -199,15 +200,12 @@
                             android:layout_weight="1.5"
                             android:orientation="horizontal"
                             android:layout_width="0dp"
-                            android:gravity="right"
-                            android:layout_height="match_parent">
+                            android:layout_height="wrap_content">
 
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/recyclerPhotos"
-                                android:layout_marginRight="10dp"
-                                android:layout_marginLeft="10dp"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent">
+                                android:layout_height="wrap_content">
 
                             </androidx.recyclerview.widget.RecyclerView>
 

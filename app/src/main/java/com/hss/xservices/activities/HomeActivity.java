@@ -20,6 +20,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.material.navigation.NavigationView;
 import com.hss.xservices.R;
 import com.hss.xservices.fragments.HomeFragment;
+import com.hss.xservices.models.Addresses;
 import com.hss.xservices.models.Profile;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
@@ -33,19 +34,28 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.Menu;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+//    @BindView(R.id.textView)
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,8 @@ public class HomeActivity extends AppCompatActivity
         ButterKnife.bind(this);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View headerView = navigationView.getHeaderView(0);
+        textView = headerView.findViewById(R.id.textView);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -66,6 +78,12 @@ public class HomeActivity extends AppCompatActivity
         getProfile();
         ShowFragment(R.id.nav_home);
 
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this,ProfileActivity.class));
+            }
+        });
 
     }
 
@@ -148,6 +166,8 @@ public class HomeActivity extends AppCompatActivity
             public void onResponse(String response) {
 
                 Log.e("getProfile", "" + response);
+                List<Profile> profileList = new ArrayList<>();
+                List<Addresses> addressesList = new ArrayList<>();
 
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
@@ -156,16 +176,19 @@ public class HomeActivity extends AppCompatActivity
                     if (code.equalsIgnoreCase("OK")){
                        JSONObject data = jsonObject2.getJSONObject("data");
                        JSONObject profile_obj = data.getJSONObject("profile");
-                        Profile profile = new Profile();
-                        profile.setUserId(profile_obj.optInt("userId"));
-                        profile.setUserId(profile_obj.optInt("userType"));
-                        profile.setUserId(profile_obj.optInt("userRole"));
-                        profile.setUserId(profile_obj.optInt("gender"));
+
+                        String title = profile_obj.optString("title");
+                        String firstName = profile_obj.optString("firstName");
+                        if (title.equals("null") || firstName.equals("null")){
+                            textView.setText("MR USER");
+                        }else {
+                            textView.setText(""+title+" "+firstName);
+                        }
+
                     }else {
                         Log.e("not OK","-->");
                     }
                 } catch (JSONException e) {
-
                     Log.e("JSONException", "" + e);
                     e.printStackTrace();
                 }
