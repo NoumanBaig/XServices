@@ -9,7 +9,6 @@
     android:background="@drawable/background"
     tools:context=".activities.SplashActivity">
 
-
         <ImageView
             android:src="@drawable/xlogo"
             android:layout_width="250dp"

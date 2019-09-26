@@ -68,7 +68,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
                         .putExtra("id",""+categoryList.get(position).getSvcId())
                         .putExtra("title",""+categoryList.get(position).getSvcTitle())
                         .putExtra("description",description)
-                        .putExtra("price","$"+categoryList.get(position).getHourRate()));
+                        .putExtra("price",categoryList.get(position).getHourRate()));
             }
         });
         holder.btn_buy.setOnClickListener(new View.OnClickListener() {
@@ -79,7 +79,7 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
                         .putExtra("id",""+categoryList.get(position).getSvcId())
                         .putExtra("title",""+categoryList.get(position).getSvcTitle())
                         .putExtra("description",description)
-                        .putExtra("price","$"+categoryList.get(position).getHourRate()));
+                        .putExtra("price",categoryList.get(position).getHourRate()));
             }
         });
     }

@@ -79,7 +79,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             txt_title.setText(str_title);
             txt_serviceName.setText(str_title);
             txt_serviceDesc.setText(str_desc);
-            txt_servicePrice.setText(str_price);
+            txt_servicePrice.setText("$"+str_price);
             txt_serviceNotes.setText("NIL");
 
             Prefs.with(ServiceDescriptionActivity.this).save("str_id",str_id);

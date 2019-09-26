@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,6 +29,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,7 +51,10 @@ public class OrderSummaryActivity extends AppCompatActivity {
     TextView txt_servicePrice;
     @BindView(R.id.txt_serviceDate)
     TextView txt_serviceDate;
-    String str_title,str_desc,str_price,str_image,str_date,str_time,str_id;
+    double price = 0;
+    int id=0;
+    long dateOrgin;
+    String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime;
     ArrayList<String> arr_fileName,arr_originalName;
 
     @Override
@@ -68,6 +71,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null){
             arr_fileName = new ArrayList<>();
             arr_originalName = new ArrayList<>();
+            sending_dateTime = getIntent().getStringExtra("sending_dateTime");
             str_date = getIntent().getStringExtra("date");
             str_time = getIntent().getStringExtra("time");
 
@@ -81,6 +85,8 @@ public class OrderSummaryActivity extends AppCompatActivity {
             str_title = Prefs.with(OrderSummaryActivity.this).getString("title","");
             str_desc = Prefs.with(OrderSummaryActivity.this).getString("description","");
             str_price = Prefs.with(OrderSummaryActivity.this).getString("price","");
+            price = Double.parseDouble(str_price);
+            id = Integer.parseInt(str_id);
 
             Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
             txt_title.setText(str_title);
@@ -113,12 +119,12 @@ public class OrderSummaryActivity extends AppCompatActivity {
         try {
             jsonParams = new JSONObject();
             JSONObject object = new JSONObject();
-            object.put("svcId",str_id);
-            object.put("addressId","36");
-            object.put("svcCost",str_price);
-            object.put("svcTax","0.00");
-            object.put("startDateTime",txt_serviceDate.getText().toString());
-            object.put("endDateTime",txt_serviceDate.getText().toString());
+            object.put("svcId",id);
+            object.put("addressId",36);
+            object.put("svcCost",price);
+            object.put("svcTax",0.00);
+            object.put("startDateTime",sending_dateTime);
+            object.put("endDateTime",sending_dateTime);
 
             JSONArray array = new JSONArray();
             JSONObject object1 = new JSONObject();
@@ -136,7 +142,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
                 Constants.BASE_URL + "/order/schedule", jsonParams, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {

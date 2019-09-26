@@ -77,7 +77,7 @@ public class ScheduleActivity extends AppCompatActivity {
     @BindView(R.id.calendarView)
     MaterialCalendarView calendarView;
     int day, month, year;
-    String str_day, str_time;
+    String str_day, str_time,snd_date,snd_time,sending_dateTime;
     @BindView(R.id.txt_date)
     TextView txt_date;
     @BindView(R.id.txt_time)
@@ -117,6 +117,13 @@ public class ScheduleActivity extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
     }
+    public static String getCurrentTime2() {
+        //date output format
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss");
+        Calendar cal = Calendar.getInstance();
+        return dateFormat.format(cal.getTime());
+    }
+
 
     private void setDateAndTime() {
         calendarView.setDateSelected(CalendarDay.today(), true);
@@ -125,11 +132,16 @@ public class ScheduleActivity extends AppCompatActivity {
         month = CalendarDay.today().getMonth();
         year = CalendarDay.today().getYear();
         str_day = day + "-" + month + "-" + year;
+        snd_date = year + "-" + month + "-" + day;
         Log.e("str_day", "" + str_day);
 
         txt_date.setText(str_day);
         str_time = getCurrentTime();
+        snd_time = getCurrentTime2();
         txt_time.setText(str_time);
+
+        sending_dateTime = snd_date+"T"+snd_time+".000Z";
+        Log.e("sending_dateTime", "" + sending_dateTime);
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -139,9 +151,14 @@ public class ScheduleActivity extends AppCompatActivity {
                 year = date.getYear();
                 str_day = day + "-" + month + "-" + year;
                 Log.e("str_day", "" + str_day);
+                snd_date = year + "-" + month + "-" + day;
                 txt_date.setText(str_day);
                 str_time = getCurrentTime();
+                snd_time = getCurrentTime2();
                 txt_time.setText(str_time);
+
+                sending_dateTime = snd_date+"T"+snd_time+".000Z";
+                Log.e("sending_dateTime", "" + sending_dateTime);
             }
         });
 
@@ -160,6 +177,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 startActivity(new Intent(this, OrderSummaryActivity.class)
                         .putExtra("date", str_day)
                         .putExtra("time", str_time)
+                        .putExtra("sending_dateTime", sending_dateTime)
                 .putStringArrayListExtra("arr_fileName",arr_fileName)
                         .putStringArrayListExtra("arr_originalName",arr_originalName));
                 break;

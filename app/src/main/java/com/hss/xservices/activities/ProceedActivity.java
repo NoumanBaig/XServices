@@ -13,8 +13,6 @@ import android.widget.TextView;
 
 import com.hss.xservices.R;
 import com.hss.xservices.adapters.AddressAdapter;
-import com.hss.xservices.adapters.ServicesAdapter;
-import com.hss.xservices.utils.Prefs;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -34,7 +32,7 @@ public class ProceedActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preceed);
+        setContentView(R.layout.activity_proceed);
         ButterKnife.bind(this);
 
         Toolbar toolbar = findViewById(R.id.toolbar);

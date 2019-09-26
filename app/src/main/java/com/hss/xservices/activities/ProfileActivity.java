@@ -311,6 +311,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
                 object1.put("addressType","0");
                 object1.put("country",edt_country.getText().toString());
                 object1.put("province",edt_province.getText().toString());
+                object1.put("city",edt_city.getText().toString());
                 object1.put("pin",edt_pincode.getText().toString());
                 object1.put("address1",edt_address1.getText().toString());
                 object1.put("address2",edt_address2.getText().toString());
@@ -338,8 +339,10 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
                     JSONObject jsonObject2 = jsonObject.getJSONObject("response");
                     String code = jsonObject2.optString("code");
+                    String message = jsonObject2.optString("message");
+                    Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
                     if (code.equalsIgnoreCase("OK")){
-
+                        JSONObject object = jsonObject2.getJSONObject("data");
                     }else {
                         Log.e("not OK","-->");
                     }
