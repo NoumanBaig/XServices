@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -28,10 +29,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,6 +100,19 @@ public class OrderSummaryActivity extends AppCompatActivity {
             txt_servicePrice.setText(str_price);
             txt_serviceDate.setText(str_date+" "+str_time);
 
+            String expiryDateString = "2018-10-15T17:52:00Z";
+            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+            formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+            Date date = null;
+            try {
+                date = formatter.parse(expiryDateString);
+                Log.e("date--->",""+date);
+                expiryDateString=formatter.format(date);
+                Log.e("expiryDateString",""+expiryDateString);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -106,8 +124,17 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_confirmOrder)
     public void onConfirmClick(View view){
-        orderRequest();
-       // startActivity(new Intent(this,MyOrdersActivity.class));
+        try {
+            if (arr_fileName != null || arr_fileName.size() <= 0){
+                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
+            }else {
+                orderRequest();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // startActivity(new Intent(this,MyOrdersActivity.class));
     }
 
     private void orderRequest(){
