@@ -3,14 +3,20 @@ package com.hss.xservices.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -21,14 +27,19 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.hss.xservices.R;
+import com.hss.xservices.adapters.SliderAdapter;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
 import com.hss.xservices.utils.Prefs;
+import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,12 +49,14 @@ import butterknife.OnClick;
 
 public class ServiceDescriptionActivity extends AppCompatActivity {
 
-    @BindView(R.id.img)
-    ImageView img;
+//    @BindView(R.id.img)
+//    ImageView img;
     @BindView(R.id.txt_title)
     TextView txt_title;
-    @BindView(R.id.txt_serviceName)
-    TextView txt_serviceName;
+    @BindView(R.id.imageSlider)
+    SliderView sliderView;
+//    @BindView(R.id.txt_serviceName)
+//    TextView txt_serviceName;
     @BindView(R.id.txt_serviceDesc)
     TextView txt_serviceDesc;
     @BindView(R.id.txt_servicePrice)
@@ -75,19 +88,13 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
 
             getDetails(str_id);
 
-            Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
-            txt_title.setText(str_title);
-            txt_serviceName.setText(str_title);
-            txt_serviceDesc.setText(str_desc);
-            txt_servicePrice.setText("$"+str_price);
-            txt_serviceNotes.setText("NIL");
-
             Prefs.with(ServiceDescriptionActivity.this).save("str_id",str_id);
             Prefs.with(ServiceDescriptionActivity.this).save("image",str_image);
             Prefs.with(ServiceDescriptionActivity.this).save("title",str_title);
             Prefs.with(ServiceDescriptionActivity.this).save("description",str_desc);
             Prefs.with(ServiceDescriptionActivity.this).save("price",str_price);
         }
+
     }
 
     @Override
@@ -111,9 +118,34 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.e("response",""+response);
-
+                ArrayList<String> arr_photos = new ArrayList<>();
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
+                    JSONObject res_obj = jsonObject.getJSONObject("response");
+                    String status = res_obj.optString("code");
+                    if (status.equalsIgnoreCase("OK")){
+                        JSONObject data_obj = res_obj.getJSONObject("data");
+                        JSONObject svcDetails = data_obj.getJSONObject("svcDetails");
+                        String svcId = svcDetails.optString("svcId");
+                        String svcTitle = svcDetails.optString("svcTitle");
+                        String svcDescription = svcDetails.optString("svcDescription");
+                        String hourRate = svcDetails.optString("hourRate");
+                        String taxRate = svcDetails.optString("taxRate");
+                        String operCommission = svcDetails.optString("operCommission");
+                        JSONArray jsonArray = svcDetails.getJSONArray("photos");
+                        for (int i=0; i<jsonArray.length(); i++){
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            arr_photos.add(object.optString("photoFileName"));
+                        }
+                        txt_title.setText(svcTitle);
+                        Spanned html_text = Html.fromHtml(svcDescription);
+                        txt_serviceDesc.setText(""+html_text);
+                        txt_servicePrice.setText("$"+hourRate);
+                        txt_serviceNotes.setText("NIL");
+                        imageSlider(arr_photos);
+                    }else {
+                        Log.e("Something","went wrong");
+                    }
 
                 } catch (JSONException e) {
 
@@ -148,4 +180,16 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
         };
         AppControler.getInstance().addToRequestQueue(jsonObjReq, "get_services");
     }
+
+    private void imageSlider(ArrayList<String> arrayList) {
+        final SliderAdapter adapter = new SliderAdapter(ServiceDescriptionActivity.this,arrayList,"true");
+        sliderView.setSliderAdapter(adapter);
+        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
+            @Override
+            public void onIndicatorClicked(int position) {
+                sliderView.setCurrentPagePosition(position);
+            }
+        });
+    }
+
 }

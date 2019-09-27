@@ -2,6 +2,8 @@ package com.hss.xservices.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,8 +45,9 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.CategoryViewho
 
         holder.txt_heading.setText(""+services.get(position).getDispText());
         String description = services.get(position).getDescription();
-        if(!description.equals("null")){
-            holder.txt_subHeading.setText(""+description);
+        Spanned html_text = Html.fromHtml(description);
+        if(!html_text.equals("null")){
+            holder.txt_subHeading.setText(""+html_text);
         }
 
         String image_url = "http://3.83.243.193:3000/files/"+services.get(position).getImage();

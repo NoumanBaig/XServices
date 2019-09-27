@@ -36,7 +36,7 @@
     <string name="search">Search</string>
     <string name="buy_now">Buy Now</string>
     <string name="service_name">Service Name</string>
-    <string name="service_desc">Service Desc</string>
+    <string name="service_desc">Service Description:</string>
     <string name="price">Price</string>
     <string name="notes">Special Notes</string>
     <string name="colon">:</string>

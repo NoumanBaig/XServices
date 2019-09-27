@@ -2,6 +2,8 @@ package com.hss.xservices.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,9 +45,10 @@ public class ServicesAdapter extends RecyclerView.Adapter<ServicesAdapter.Catego
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
 
         holder.txt_name.setText(""+categoryList.get(position).getSvcTitle());
-         description = categoryList.get(position).getSvcSla();
-        if(!description.equals("null")){
-            holder.txt_desc.setText(""+description);
+         description = categoryList.get(position).getSvcDescription();
+        Spanned html_text = Html.fromHtml(description);
+        if(!html_text.equals("null")){
+            holder.txt_desc.setText(""+html_text);
         }
 
 //        if (categoryList.get(position).getPhotos().get(position).getPhotoFileName())
