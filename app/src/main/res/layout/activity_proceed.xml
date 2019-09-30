@@ -9,24 +9,38 @@
 
     <include layout="@layout/toolbar"/>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
 
-            <ImageView
-                android:id="@+id/img"
-                android:padding="5dp"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp">
+
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="140dp" />
+                android:layout_height="match_parent"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderCircularHandlerEnabled="true"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="@color/colorAccent"
+                app:sliderIndicatorUnselectedColor="@color/white"
+                app:sliderScrollTimeInSec="4"
+                app:sliderStartAutoCycle="true" />
 
-            <com.hss.xservices.utils.CustomFontTextView
+        </FrameLayout>
+
+
+        <com.hss.xservices.utils.CustomFontTextView
                 android:gravity="center"
                 android:id="@+id/txt_title"
                 android:layout_gravity="bottom"
@@ -37,6 +51,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+        <androidx.core.widget.NestedScrollView
+            android:fillViewport="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
         <com.hss.xservices.utils.CustomFontTextView
             android:padding="10dp"
@@ -66,6 +89,7 @@
             android:id="@+id/btn_addAddress"
             android:text="@string/add_address"
             android:textStyle="bold"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
@@ -78,11 +102,13 @@
             android:textStyle="bold"
             android:id="@+id/btn_schedule"
             android:text="@string/schedule"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
+        </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
     </LinearLayout>
 
-    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

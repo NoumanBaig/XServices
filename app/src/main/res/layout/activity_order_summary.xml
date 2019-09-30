@@ -9,22 +9,34 @@
 
     <include layout="@layout/toolbar"/>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
-
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="140dp">
 
-                <ImageView
-                    android:id="@+id/img"
-                    android:padding="5dp"
+                <com.smarteist.autoimageslider.SliderView
+                    android:id="@+id/imageSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp" />
+                    android:layout_height="match_parent"
+                    app:sliderAutoCycleDirection="back_and_forth"
+                    app:sliderAutoCycleEnabled="true"
+                    app:sliderCircularHandlerEnabled="true"
+                    app:sliderIndicatorGravity="center_horizontal|bottom"
+                    app:sliderIndicatorMargin="15dp"
+                    app:sliderIndicatorOrientation="horizontal"
+                    app:sliderIndicatorPadding="3dp"
+                    app:sliderIndicatorRadius="2dp"
+                    app:sliderIndicatorSelectedColor="@color/colorAccent"
+                    app:sliderIndicatorUnselectedColor="@color/white"
+                    app:sliderScrollTimeInSec="4"
+                    app:sliderStartAutoCycle="true" />
+
+            </FrameLayout>
+
 
                 <com.hss.xservices.utils.CustomFontTextView
                     android:gravity="center"
@@ -37,6 +49,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -507,12 +528,13 @@
                 android:layout_margin="20dp"
                 android:textStyle="bold"
                 android:background="@color/colorAccent"
+                android:foreground="?attr/selectableItemBackground"
                 android:text="@string/confirm_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
+            </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
         </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

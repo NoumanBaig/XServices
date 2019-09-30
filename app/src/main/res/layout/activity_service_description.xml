@@ -332,6 +332,7 @@
             android:textColor="@color/white"
             android:id="@+id/btn_proceed"
             android:text="@string/proceed"
+            android:foreground="?attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
             </LinearLayout>

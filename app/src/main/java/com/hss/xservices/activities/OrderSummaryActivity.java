@@ -5,6 +5,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,9 +22,12 @@ import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.hss.xservices.R;
+import com.hss.xservices.adapters.SliderAdapter;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
 import com.hss.xservices.utils.Prefs;
+import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
+import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -44,8 +49,8 @@ import butterknife.OnClick;
 
 public class OrderSummaryActivity extends AppCompatActivity {
 
-    @BindView(R.id.img)
-    ImageView img;
+    @BindView(R.id.imageSlider)
+    SliderView sliderView;
     @BindView(R.id.txt_title)
     TextView txt_title;
     @BindView(R.id.txt_serviceName)
@@ -60,7 +65,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     int id=0;
     long dateOrgin;
     String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime;
-    ArrayList<String> arr_fileName,arr_originalName;
+    ArrayList<String> arr_fileName,arr_originalName,arr_photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,12 +81,14 @@ public class OrderSummaryActivity extends AppCompatActivity {
         if (getIntent().getExtras() != null){
             arr_fileName = new ArrayList<>();
             arr_originalName = new ArrayList<>();
+            arr_photos = new ArrayList<>();
             sending_dateTime = getIntent().getStringExtra("sending_dateTime");
             str_date = getIntent().getStringExtra("date");
             str_time = getIntent().getStringExtra("time");
 
             arr_fileName = getIntent().getStringArrayListExtra("arr_fileName");
             arr_originalName = getIntent().getStringArrayListExtra("arr_originalName");
+            arr_photos = getIntent().getStringArrayListExtra("arr_photos");
 
             Log.e("arr_fileName",""+arr_fileName);
             Log.e("arr_originalName",""+arr_originalName);
@@ -90,13 +97,15 @@ public class OrderSummaryActivity extends AppCompatActivity {
             str_title = Prefs.with(OrderSummaryActivity.this).getString("title","");
             str_desc = Prefs.with(OrderSummaryActivity.this).getString("description","");
             str_price = Prefs.with(OrderSummaryActivity.this).getString("price","");
+            imageSlider(arr_photos);
             price = Double.parseDouble(str_price);
             id = Integer.parseInt(str_id);
 
-            Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
+        //    Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
             txt_title.setText(str_title);
             txt_serviceName.setText(str_title);
-            txt_serviceDesc.setText(str_desc);
+            Spanned html_text = Html.fromHtml(str_desc);
+            txt_serviceDesc.setText(html_text);
             txt_servicePrice.setText(str_price);
             txt_serviceDate.setText(str_date+" "+str_time);
 
@@ -122,13 +131,24 @@ public class OrderSummaryActivity extends AppCompatActivity {
         return true;
     }
 
+    private void imageSlider(ArrayList<String> arrayList) {
+        final SliderAdapter adapter = new SliderAdapter(OrderSummaryActivity.this,arrayList,"true");
+        sliderView.setSliderAdapter(adapter);
+        sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
+            @Override
+            public void onIndicatorClicked(int position) {
+                sliderView.setCurrentPagePosition(position);
+            }
+        });
+    }
+
     @OnClick(R.id.btn_confirmOrder)
     public void onConfirmClick(View view){
         try {
-            if (arr_fileName != null || arr_fileName.size() <= 0){
-                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
-            }else {
+            if (arr_fileName != null){
                 orderRequest();
+            }else {
+                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
             }
         } catch (Exception e) {
             e.printStackTrace();

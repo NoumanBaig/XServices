@@ -49,6 +49,7 @@
     <string name="upload_pics">Upload the Picture of the Area / Equipment to be Serviced</string>
     <string name="add_photo">Add Photo</string>
     <string name="cus_notes">Customer Notes :</string>
+    <string name="enter_notes">Enter your notes here</string>
     <string name="order_summary">Order Summary</string>
     <string name="service_name2">Service Name :</string>
     <string name="service_desc2">Service Description :</string>

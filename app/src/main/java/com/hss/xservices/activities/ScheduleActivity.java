@@ -94,7 +94,7 @@ public class ScheduleActivity extends AppCompatActivity {
     String imageEncoded;
     List<Uri> uriArrayList = new ArrayList<>();
     ArrayList<Uri> mArrayUriGallery = new ArrayList<Uri>();
-    ArrayList<String> arr_fileName,arr_originalName;
+    ArrayList<String> arr_fileName,arr_originalName,arr_photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +108,10 @@ public class ScheduleActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
+        if (getIntent().getExtras() != null){
+            arr_photos = new ArrayList<>();
+            arr_photos = getIntent().getStringArrayListExtra("arr_photos");
+        }
         setDateAndTime();
 
     }
@@ -180,7 +184,8 @@ public class ScheduleActivity extends AppCompatActivity {
                         .putExtra("time", str_time)
                         .putExtra("sending_dateTime", sending_dateTime)
                 .putStringArrayListExtra("arr_fileName",arr_fileName)
-                        .putStringArrayListExtra("arr_originalName",arr_originalName));
+                        .putStringArrayListExtra("arr_originalName",arr_originalName)
+                        .putStringArrayListExtra("arr_photos",arr_photos));
                 break;
             case R.id.layout_addPhoto:
                 requestPermission();

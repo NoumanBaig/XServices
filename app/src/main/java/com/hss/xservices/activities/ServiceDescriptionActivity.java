@@ -66,6 +66,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
     @BindView(R.id.btn_proceed)
     Button btn_proceed;
     String str_title,str_desc,str_price,str_image,str_id;
+    ArrayList<String> arr_photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +108,8 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
     public void onClick(View view){
         startActivity(new Intent(this,ProceedActivity.class)
         .putExtra("image",str_image)
-        .putExtra("title",str_title));
+        .putExtra("title",str_title)
+        .putStringArrayListExtra("arr_photos",arr_photos));
     }
 
         private void getDetails(String id){
@@ -118,7 +120,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
             public void onResponse(String response) {
 
                 Log.e("response",""+response);
-                ArrayList<String> arr_photos = new ArrayList<>();
+                arr_photos = new ArrayList<>();
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
                     JSONObject res_obj = jsonObject.getJSONObject("response");

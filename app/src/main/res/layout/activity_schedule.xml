@@ -35,7 +35,8 @@
                     android:layout_height="wrap_content"
                     app:mcv_tileHeight="40dp"
                     app:mcv_tileWidth="40dp"
-                    app:mcv_showOtherDates="defaults"
+                    app:mcv_dateTextAppearance="@dimen/textlarge"
+                    app:mcv_showOtherDates="decorated_disabled"
                     app:mcv_selectionColor="@color/colorAccent" />
 
             </androidx.cardview.widget.CardView>
@@ -151,15 +152,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:text="@string/optional"
-                            android:textSize="12sp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:textColor="@color/colorAccent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
 
                     </LinearLayout>
                     <LinearLayout
@@ -272,21 +264,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:text="@string/optional"
-                            android:textSize="12sp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:textColor="@color/colorAccent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
 
                     </LinearLayout>
 
-                    <com.hss.xservices.utils.CustomFontTextView
-                        android:text="lorem ipsum consumer notes for all the consumer about the product and visibility and goes on the additional things"
-                        android:textColor="@color/black"
-                        android:layout_width="wrap_content"
+                    <com.hss.xservices.utils.CustomFontEditText
+                        android:id="@+id/edt_notes"
+                        android:hint="@string/enter_notes"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content" />
 
 
@@ -300,6 +284,7 @@
                 android:id="@+id/btn_continue"
                 android:text="@string/continu"
                 android:textStyle="bold"
+                android:foreground="?attr/selectableItemBackground"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
