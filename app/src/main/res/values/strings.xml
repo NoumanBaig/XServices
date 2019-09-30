@@ -70,6 +70,7 @@
     <string name="email">Email ID</string>
     <string name="gender">Gender</string>
     <string name="dob">DOB</string>
+    <string name="address">Address :</string>
     <string name="address1">Address 1</string>
     <string name="address2">Address 2</string>
     <string name="city">City</string>
@@ -79,6 +80,15 @@
     <string name="pincode">Pincode</string>
     <string name="landmark">Land Mark</string>
     <string name="welcome">Welcome</string>
+    <string name="adds_dts">Please provide address details</string>
+    <string name="home">Home</string>
+    <string name="work">Work</string>
+    <string name="other">Other</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="type_own">Type your own</string>
+    <string name="adds_name">Address Name</string>
+    <string name="adds_mobile">Address Mobile</string>
     <!--<string name="total_pay_amt"></string>-->
 
 
