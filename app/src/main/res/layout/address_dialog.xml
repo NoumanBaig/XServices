@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="10dp">
+
+        <com.hss.xservices.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="15dp"
+            android:text="@string/adds_dts"
+            android:textColor="@color/black"
+            android:textSize="@dimen/textmed"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_height="wrap_content">
+
+            <com.hss.xservices.utils.CustomFontTextView
+                android:text="@string/address"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontTextView
+                android:id="@+id/txt_address"
+                android:textStyle="bold"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:padding="10dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:text="@string/home"
+                android:id="@+id/radio_home"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="@string/work"
+                android:id="@+id/radio_work"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <RadioButton
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:text="Other"
+                android:id="@+id/radio_other"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+
+        </RadioGroup>
+        </LinearLayout>
+        <com.hss.xservices.utils.CustomFontEditText
+            android:hint="@string/type_own"
+            android:id="@+id/edt_own"
+            android:visibility="gone"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:id="@+id/edt_addsName"
+                android:hint="@string/adds_name"
+                android:inputType="textCapWords"
+                android:imeOptions="actionNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <com.hss.xservices.utils.CustomFontEditText
+                android:id="@+id/edt_addsMobile"
+                android:inputType="number"
+                android:imeOptions="actionDone"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/adds_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:weightSum="2"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.hss.xservices.utils.CustomFontButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAllCaps="false"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@color/colorPrimary"
+                android:padding="10dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/cancel"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textmed" />
+
+            <com.hss.xservices.utils.CustomFontButton
+                android:id="@+id/btn_save"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:background="@color/colorAccent"
+                android:padding="10dp"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textmed" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -16,8 +17,16 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -54,6 +63,7 @@ public class ProceedActivity extends AppCompatActivity {
     String str_title,str_image;
     ArrayList<String> arr_photos;
     double latitude, longitude;
+    String str_address_type="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,4 +186,74 @@ public class ProceedActivity extends AppCompatActivity {
             return "";
         }
     }
+
+    private void showDialog(String address){
+        final Dialog alertDialog=new Dialog(ProceedActivity.this,android.R.style.Theme_Material_Light_Dialog_NoActionBar);
+        alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        alertDialog.setContentView(R.layout.alert_dialog);
+        Window window = alertDialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+        alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        TextView txt_address=(TextView)alertDialog.findViewById(R.id.txt_address);
+        EditText edt_addsName =(EditText)alertDialog.findViewById(R.id.edt_addsName);
+        EditText edt_addsMobile =(EditText)alertDialog.findViewById(R.id.edt_addsMobile);
+        EditText edt_own =(EditText)alertDialog.findViewById(R.id.edt_own);
+        RadioButton radio_home =(RadioButton)alertDialog.findViewById(R.id.radio_home);
+        RadioButton radio_work =(RadioButton)alertDialog.findViewById(R.id.radio_work);
+        RadioButton radio_other =(RadioButton)alertDialog.findViewById(R.id.radio_other);
+        Button btn_save=(Button)alertDialog.findViewById(R.id.btn_save);
+        Button btn_cancel=(Button)alertDialog.findViewById(R.id.btn_cancel);
+
+        txt_address.setText(address);
+
+        radio_home.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    str_address_type = buttonView.getText().toString();
+                }
+            }
+        });
+        radio_work.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    str_address_type = buttonView.getText().toString();
+                }
+            }
+        });
+        radio_other.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    edt_own.setVisibility(View.VISIBLE);
+                }else {
+                    edt_own.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                str_address_type = edt_own.getText().toString();
+                if (edt_addsName.getText().toString().equalsIgnoreCase("")){
+
+                }else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")){
+
+                }
+            }
+        });
+        alertDialog.show();
+    }
+
 }
