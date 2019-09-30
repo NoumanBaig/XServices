@@ -82,18 +82,15 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
 
         if (getIntent().getExtras() != null){
             str_id = getIntent().getStringExtra("id");
-            str_image = getIntent().getStringExtra("image");
-            str_title = getIntent().getStringExtra("title");
-            str_desc = getIntent().getStringExtra("description");
-            str_price = getIntent().getStringExtra("price");
+//            str_image = getIntent().getStringExtra("image");
+//            str_title = getIntent().getStringExtra("title");
+//            str_desc = getIntent().getStringExtra("description");
+//            str_price = getIntent().getStringExtra("price");
 
             getDetails(str_id);
 
             Prefs.with(ServiceDescriptionActivity.this).save("str_id",str_id);
-            Prefs.with(ServiceDescriptionActivity.this).save("image",str_image);
-            Prefs.with(ServiceDescriptionActivity.this).save("title",str_title);
-            Prefs.with(ServiceDescriptionActivity.this).save("description",str_desc);
-            Prefs.with(ServiceDescriptionActivity.this).save("price",str_price);
+
         }
 
     }
@@ -141,10 +138,13 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
                         }
                         txt_title.setText(svcTitle);
                         Spanned html_text = Html.fromHtml(svcDescription);
-                        txt_serviceDesc.setText(""+html_text);
+                        txt_serviceDesc.setText(html_text);
                         txt_servicePrice.setText("$"+hourRate);
                         txt_serviceNotes.setText("NIL");
                         imageSlider(arr_photos);
+                        Prefs.with(ServiceDescriptionActivity.this).save("title",svcTitle);
+                        Prefs.with(ServiceDescriptionActivity.this).save("description",svcDescription);
+                        Prefs.with(ServiceDescriptionActivity.this).save("price",hourRate);
                     }else {
                         Log.e("Something","went wrong");
                     }

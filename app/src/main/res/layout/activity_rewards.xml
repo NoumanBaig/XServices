@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.RewardsActivity">
+
+    <include layout="@layout/toolbar"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+       <ImageView
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+
+    <com.hss.xservices.utils.CustomFontTextView
+        android:gravity="center"
+        android:id="@+id/txt_title"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/gray"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="35dp">
+            
+            <Button
+                android:layout_width="100dp"
+                android:textColor="@color/white"
+                android:text="@string/redeem"
+                android:textAllCaps="false"
+                android:id="@+id/btn_redeem"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                style="?attr/borderlessButtonStyle"
+                android:background="@color/colorPrimary"
+                android:layout_height="match_parent" />
+
+            <Button
+                android:layout_width="100dp"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/earn"
+                android:textAllCaps="false"
+                android:id="@+id/btn_earn"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                style="?attr/borderlessButtonStyle"
+                android:background="@color/gray"
+                android:layout_height="match_parent" />
+
+
+            <Button
+                android:layout_width="100dp"
+                android:textColor="@color/colorPrimary"
+                android:text="@string/history"
+                android:textAllCaps="false"
+                android:textStyle="bold"
+                android:id="@+id/btn_history"
+                android:textSize="12sp"
+                style="?attr/borderlessButtonStyle"
+                android:background="@color/gray"
+                android:layout_height="match_parent" />
+
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+    </LinearLayout>
+
+</LinearLayout>

@@ -72,14 +72,16 @@
             android:layout_height="wrap_content" />
 
 
+            <include
+                layout="@layout/cell_address"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerAddress"
-                    android:layout_margin="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <!--<androidx.recyclerview.widget.RecyclerView-->
+                    <!--android:id="@+id/recyclerAddress"-->
+                    <!--android:layout_margin="10dp"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
 
-                </androidx.recyclerview.widget.RecyclerView>
+                <!--</androidx.recyclerview.widget.RecyclerView>-->
 
 
         <com.hss.xservices.utils.CustomFontButton

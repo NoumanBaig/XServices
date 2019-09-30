@@ -5,19 +5,16 @@ import android.os.Bundle;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.hss.xservices.R;
 import com.hss.xservices.fragments.HomeFragment;
-import com.hss.xservices.fragments.OrdersFragment;
-import com.hss.xservices.fragments.ProfileFragment;
-import com.hss.xservices.fragments.RewardsFragment;
-import com.hss.xservices.utils.BottomNavigationBehavior;
+import com.hss.xservices.fragments.RedeemFragment;
+import com.hss.xservices.fragments.EarnFragment;
+import com.hss.xservices.fragments.HistoryFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,17 +58,17 @@ public class MainActivity extends AppCompatActivity {
                     // mTextMessage.setText(R.string.title_home);
                     return true;
                 case R.id.navigation_orders:
-                    fragment = new OrdersFragment();
+                    fragment = new RedeemFragment();
                     loadFragment(fragment);
                     //mTextMessage.setText(R.string.title_dashboard);
                     return true;
                 case R.id.navigation_rewards:
-                    fragment = new RewardsFragment();
+                    fragment = new HistoryFragment();
                     loadFragment(fragment);
                     // mTextMessage.setText(R.string.title_notifications);
                     return true;
                 case R.id.navigation_profile:
-                    fragment = new ProfileFragment();
+                    fragment = new EarnFragment();
                     loadFragment(fragment);
                     // mTextMessage.setText(R.string.title_notifications);
                     return true;

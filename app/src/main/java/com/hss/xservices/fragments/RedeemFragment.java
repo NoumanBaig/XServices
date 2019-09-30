@@ -7,16 +7,15 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.hss.xservices.R;
 
-public class OrdersFragment extends Fragment {
+public class RedeemFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.orders_fragment,container,false);
+        View view = inflater.inflate(R.layout.redeem_fragment,container,false);
 
         return view;
     }

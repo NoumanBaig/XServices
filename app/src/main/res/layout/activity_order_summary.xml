@@ -59,6 +59,44 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+            <!--<androidx.cardview.widget.CardView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:cardCornerRadius="10dp"-->
+                <!--app:cardBackgroundColor="@color/background"-->
+                <!--app:cardElevation="5dp"-->
+                <!--android:layout_marginLeft="10dp"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_marginTop="10dp"-->
+                <!--android:layout_marginBottom="5dp">-->
+
+                <!--<LinearLayout-->
+                    <!--android:padding="10dp"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content">-->
+
+
+                        <!--<com.hss.xservices.utils.CustomFontTextView-->
+                            <!--android:text="@string/service_name2"-->
+                            <!--android:textColor="@color/colorPrimary"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+
+                        <!--<com.hss.xservices.utils.CustomFontTextView-->
+                            <!--android:textStyle="bold"-->
+                            <!--android:paddingLeft="10dp"-->
+                            <!--android:id="@+id/txt_serviceName"-->
+                            <!--android:paddingRight="10dp"-->
+                            <!--android:textColor="@color/colorPrimary"-->
+                            <!--android:layout_width="wrap_content"-->
+                            <!--android:layout_height="wrap_content" />-->
+
+
+                <!--</LinearLayout>-->
+            <!--</androidx.cardview.widget.CardView>-->
+
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,44 +106,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="5dp">
-
-                <LinearLayout
-                    android:padding="10dp"
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:text="@string/service_name2"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <com.hss.xservices.utils.CustomFontTextView
-                            android:textStyle="bold"
-                            android:paddingLeft="10dp"
-                            android:id="@+id/txt_serviceName"
-                            android:paddingRight="10dp"
-                            android:textColor="@color/colorPrimary"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/background"
-                app:cardElevation="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp">
 
                 <LinearLayout
@@ -125,7 +125,6 @@
 
                     <com.hss.xservices.utils.CustomFontTextView
                         android:id="@+id/txt_serviceDesc"
-                        android:text="lorem ipsum consumer notes for all the consumer about the product and visibility and goes on the additional things"
                         android:textColor="@color/black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
@@ -442,23 +441,26 @@
 
                     <LinearLayout
                         android:weightSum="2"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
                         <LinearLayout
                             android:layout_weight="1"
-                            android:orientation="horizontal"
+                            android:orientation="vertical"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content">
 
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="Nouman"
+                                android:id="@+id/txt_name"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
-
+                            <com.hss.xservices.utils.CustomFontTextView
+                                android:id="@+id/txt_mobile"
+                                android:textColor="@color/colorPrimary"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
 
                         </LinearLayout>
                         <LinearLayout
@@ -467,56 +469,48 @@
                             android:layout_width="0dp"
                             android:gravity="right"
                             android:layout_height="wrap_content">
-
                             <com.hss.xservices.utils.CustomFontTextView
-                                android:text="Address: hbr layout bangalore"
+                               android:paddingTop="5dp"
+                                android:paddingBottom="5dp"
+                                android:id="@+id/txt_address"
                                 android:textColor="@color/colorPrimary"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+
 
                         </LinearLayout>
 
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:weightSum="2"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                    <!--<LinearLayout-->
+                        <!--android:weightSum="2"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:orientation="horizontal"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content">-->
 
-                        <LinearLayout
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content">
-
-                            <com.hss.xservices.utils.CustomFontTextView
-                                android:text="9987654321"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
+                        <!--<LinearLayout-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:layout_height="wrap_content">-->
 
 
-                        </LinearLayout>
-                        <LinearLayout
-                            android:layout_weight="1"
-                            android:orientation="horizontal"
-                            android:layout_width="0dp"
-                            android:gravity="right"
-                            android:layout_height="wrap_content">
 
-                            <com.hss.xservices.utils.CustomFontTextView
-                                android:text="506602 karnataka india"
-                                android:textColor="@color/colorPrimary"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content" />
-
-                        </LinearLayout>
+                        <!--</LinearLayout>-->
+                        <!--<LinearLayout-->
+                            <!--android:layout_weight="1"-->
+                            <!--android:orientation="horizontal"-->
+                            <!--android:layout_width="0dp"-->
+                            <!--android:gravity="right"-->
+                            <!--android:layout_height="wrap_content">-->
 
 
-                    </LinearLayout>
+                        <!--</LinearLayout>-->
+
+
+                    <!--</LinearLayout>-->
 
 
                 </LinearLayout>

@@ -53,18 +53,26 @@ public class OrderSummaryActivity extends AppCompatActivity {
     SliderView sliderView;
     @BindView(R.id.txt_title)
     TextView txt_title;
-    @BindView(R.id.txt_serviceName)
-    TextView txt_serviceName;
+//    @BindView(R.id.txt_serviceName)
+//    TextView txt_serviceName;
     @BindView(R.id.txt_serviceDesc)
     TextView txt_serviceDesc;
     @BindView(R.id.txt_servicePrice)
     TextView txt_servicePrice;
+    @BindView(R.id.txt_serviceCost)
+    TextView txt_serviceCost;
     @BindView(R.id.txt_serviceDate)
     TextView txt_serviceDate;
+    @BindView(R.id.txt_name)
+    TextView txt_name;
+    @BindView(R.id.txt_mobile)
+    TextView txt_mobile;
+    @BindView(R.id.txt_address)
+    TextView txt_address;
     double price = 0;
     int id=0;
     long dateOrgin;
-    String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime;
+    String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime,adds_name,adds_mobile,adds_adds;
     ArrayList<String> arr_fileName,arr_originalName,arr_photos;
 
     @Override
@@ -82,7 +90,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             arr_fileName = new ArrayList<>();
             arr_originalName = new ArrayList<>();
             arr_photos = new ArrayList<>();
-            sending_dateTime = getIntent().getStringExtra("sending_dateTime");
+           // sending_dateTime = getIntent().getStringExtra("sending_dateTime");
             str_date = getIntent().getStringExtra("date");
             str_time = getIntent().getStringExtra("time");
 
@@ -93,21 +101,28 @@ public class OrderSummaryActivity extends AppCompatActivity {
             Log.e("arr_fileName",""+arr_fileName);
             Log.e("arr_originalName",""+arr_originalName);
             str_id = Prefs.with(OrderSummaryActivity.this).getString("str_id","");
-            str_image = Prefs.with(OrderSummaryActivity.this).getString("image","");
+            //str_image = Prefs.with(OrderSummaryActivity.this).getString("image","");
             str_title = Prefs.with(OrderSummaryActivity.this).getString("title","");
             str_desc = Prefs.with(OrderSummaryActivity.this).getString("description","");
             str_price = Prefs.with(OrderSummaryActivity.this).getString("price","");
+            adds_name = Prefs.with(OrderSummaryActivity.this).getString("adds_name","");
+            adds_mobile = Prefs.with(OrderSummaryActivity.this).getString("adds_mobile","");
+            adds_adds = Prefs.with(OrderSummaryActivity.this).getString("adds_adds","");
             imageSlider(arr_photos);
             price = Double.parseDouble(str_price);
             id = Integer.parseInt(str_id);
 
         //    Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
             txt_title.setText(str_title);
-            txt_serviceName.setText(str_title);
+            //txt_serviceName.setText(str_title);
             Spanned html_text = Html.fromHtml(str_desc);
             txt_serviceDesc.setText(html_text);
-            txt_servicePrice.setText(str_price);
+            txt_servicePrice.setText("CAD "+str_price);
+            txt_serviceCost.setText("CAD "+str_price);
             txt_serviceDate.setText(str_date+" "+str_time);
+            txt_name.setText(adds_name);
+            txt_address.setText(adds_adds);
+            txt_mobile.setText(adds_mobile);
 
             String expiryDateString = "2018-10-15T17:52:00Z";
             final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
@@ -117,6 +132,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
                 date = formatter.parse(expiryDateString);
                 Log.e("date--->",""+date);
                 expiryDateString=formatter.format(date);
+                sending_dateTime=formatter.format(date);
                 Log.e("expiryDateString",""+expiryDateString);
             } catch (ParseException e) {
                 e.printStackTrace();

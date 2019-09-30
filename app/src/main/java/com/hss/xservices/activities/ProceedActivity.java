@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -23,26 +24,45 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.hss.xservices.R;
 import com.hss.xservices.adapters.AddressAdapter;
 import com.hss.xservices.adapters.SliderAdapter;
+import com.hss.xservices.rest.AppControler;
+import com.hss.xservices.utils.Constants;
+import com.hss.xservices.utils.Prefs;
 import com.schibstedspain.leku.LocationPickerActivity;
 import com.smarteist.autoimageslider.IndicatorView.draw.controller.DrawController;
 import com.smarteist.autoimageslider.SliderView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,12 +78,23 @@ public class ProceedActivity extends AppCompatActivity {
     SliderView sliderView;
     @BindView(R.id.txt_title)
     TextView txt_title;
-    @BindView(R.id.recyclerAddress)
-    RecyclerView recyclerView;
+    @BindView(R.id.txt)
+    TextView txt;
+    @BindView(R.id.txt_name)
+    TextView txt_name;
+    @BindView(R.id.txt_mobile)
+    TextView txt_mobile;
+    @BindView(R.id.txt_address)
+    TextView txt_address;
+//    @BindView(R.id.recyclerAddress)
+//    RecyclerView recyclerView;
     String str_title,str_image;
     ArrayList<String> arr_photos;
     double latitude, longitude;
-    String str_address_type="";
+    @BindView(R.id.checkbox)
+    CheckBox checkbox;
+    String str_address_type="",str_check="";
+    ArrayList<String> arr_adds_name,arr_name,arr_mobile,arr_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,10 +117,30 @@ public class ProceedActivity extends AppCompatActivity {
             txt_title.setText(str_title);
             imageSlider(arr_photos);
         }
+       setAddress();
+//        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (isChecked){
+//                    str_check=buttonView.getText().toString();
+//                }
+//            }
+//        })
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        AddressAdapter addressAdapter = new AddressAdapter(this);
-        recyclerView.setAdapter(addressAdapter);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        AddressAdapter addressAdapter = new AddressAdapter(this);
+//        recyclerView.setAdapter(addressAdapter);
+    }
+
+    private void setAddress(){
+        if (!Prefs.with(ProceedActivity.this).getString("adds_name","").equalsIgnoreCase("")){
+            txt_name.setText(""+Prefs.with(ProceedActivity.this).getString("adds_name",""));
+            txt.setText(""+Prefs.with(ProceedActivity.this).getString("adds_type",""));
+            txt_mobile.setText(""+Prefs.with(ProceedActivity.this).getString("adds_mobile",""));
+            txt_address.setText(""+Prefs.with(ProceedActivity.this).getString("adds_adds",""));
+        }else {
+            Log.e("Else---->","--->");
+        }
     }
 
     @Override
@@ -109,7 +160,11 @@ public class ProceedActivity extends AppCompatActivity {
                         .build(ProceedActivity.this), 1);
                 break;
             case R.id.btn_schedule:
-                startActivity(new Intent(this, ScheduleActivity.class).putStringArrayListExtra("arr_photos",arr_photos));
+                if (!checkbox.isChecked()){
+                    Toast.makeText(this, "Please select address", Toast.LENGTH_SHORT).show();
+                }else {
+                    startActivity(new Intent(this, ScheduleActivity.class).putStringArrayListExtra("arr_photos",arr_photos));
+                }
                 break;
             default:
                 break;
@@ -147,7 +202,7 @@ public class ProceedActivity extends AppCompatActivity {
                             Log.e("longitude", "" + longitude);
                             String address = getAddressFromLatLng(latitude, longitude);
 //                            if (address != null) {
-//                                txt_location.setText(address);
+//                                showDialog(address);
 //                            }
                         }
                     }
@@ -167,9 +222,9 @@ public class ProceedActivity extends AppCompatActivity {
                 Log.e("LONGITUDE****", "" + longitude);
                 String address = data.getStringExtra(LOCATION_ADDRESS);
                 Log.e("ADDRESS****", "" + address);
-//                if (address != null) {
-//                    txt_location.setText(address);
-//                }
+                if (address != null) {
+                    showDialog(address);
+                }
             }
         }
     }
@@ -190,7 +245,8 @@ public class ProceedActivity extends AppCompatActivity {
     private void showDialog(String address){
         final Dialog alertDialog=new Dialog(ProceedActivity.this,android.R.style.Theme_Material_Light_Dialog_NoActionBar);
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alertDialog.setContentView(R.layout.alert_dialog);
+        alertDialog.setContentView(R.layout.address_dialog);
+        alertDialog.setCancelable(false);
         Window window = alertDialog.getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.gravity = Gravity.CENTER;
@@ -207,7 +263,7 @@ public class ProceedActivity extends AppCompatActivity {
         Button btn_save=(Button)alertDialog.findViewById(R.id.btn_save);
         Button btn_cancel=(Button)alertDialog.findViewById(R.id.btn_cancel);
 
-        txt_address.setText(address);
+        txt_address.setText(""+address);
 
         radio_home.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -248,12 +304,124 @@ public class ProceedActivity extends AppCompatActivity {
                 str_address_type = edt_own.getText().toString();
                 if (edt_addsName.getText().toString().equalsIgnoreCase("")){
 
+                    Toast.makeText(ProceedActivity.this, "Please enter Name", Toast.LENGTH_SHORT).show();
                 }else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")){
-
+                    Toast.makeText(ProceedActivity.this, "Please enter Mobile Number", Toast.LENGTH_SHORT).show();
+                }
+                else if (radio_other.isChecked()){
+                    if (edt_own.getText().toString().equalsIgnoreCase("")){
+                        Toast.makeText(ProceedActivity.this, "Please enter Address Name", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    alertDialog.dismiss();
+//                    Toast.makeText(ProceedActivity.this, "Very good", Toast.LENGTH_SHORT).show();
+                    Prefs.with(ProceedActivity.this).save("adds_name",edt_addsName.getText().toString());
+                    Prefs.with(ProceedActivity.this).save("adds_mobile",edt_addsMobile.getText().toString());
+                    Prefs.with(ProceedActivity.this).save("adds_type",str_address_type);
+                    Prefs.with(ProceedActivity.this).save("adds_adds",address);
+                    setAddress();
                 }
             }
         });
         alertDialog.show();
     }
+
+//    private void saveAddress(){
+//        ProgressDialog dialog = new ProgressDialog(this);
+//        dialog.setMessage("Loading...");
+//        dialog.show();
+//
+//        JSONObject jsonParams = null;
+//        try {
+//            jsonParams = new JSONObject();
+//            JSONObject object = new JSONObject();
+//            object.put("editOn",editOn);
+//            object.put("email",edt_email.getText().toString());
+//            object.put("firstName",edt_firstName.getText().toString());
+//            object.put("lastName",edt_lastName.getText().toString());
+//
+//            JSONArray array = new JSONArray();
+////            if (profile.getAddressess().size()==0){
+////                JSONObject object1 = new JSONObject();
+////                object1.put("addressType","0");
+////                object1.put("country","India");
+////                object1.put("province","Karnataka");
+////                object1.put("city","Bangalore");
+////                array.put(object1);
+////            }else {
+//            JSONObject object1 = new JSONObject();
+////                object1.put("addressId","");
+//            object1.put("addressType","0");
+//            object1.put("country",edt_country.getText().toString());
+//            object1.put("province",edt_province.getText().toString());
+//            object1.put("city",edt_city.getText().toString());
+//            object1.put("pin",edt_pincode.getText().toString());
+//            object1.put("address1",edt_address1.getText().toString());
+//            object1.put("address2",edt_address2.getText().toString());
+//            object1.put("landmark",edt_landmark.getText().toString());
+//            object1.put("geoLocLat","12.80");
+//            object1.put("geoLocLon","78.60");
+//            array.put(object1);
+////            }
+//
+//            object.put("addressess",array);
+//            jsonParams.put("request",object);
+//
+//            Log.e("jsonParams",""+jsonParams);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+//                Constants.BASE_URL + "/customer/profile", jsonParams, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                dialog.dismiss();
+//                Log.e("setProfile",""+response);
+//                try {
+//                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
+//                    JSONObject jsonObject2 = jsonObject.getJSONObject("response");
+//                    String code = jsonObject2.optString("code");
+//                    String message = jsonObject2.optString("message");
+//                    Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
+//                    if (code.equalsIgnoreCase("OK")){
+//                        JSONObject object = jsonObject2.getJSONObject("data");
+//                    }else {
+//                        Log.e("not OK","-->");
+//                    }
+//
+//                } catch (JSONException e) {
+//                    Log.e("JSONException",""+e);
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                dialog.dismiss();
+//                Log.e("F_res", "" + error);
+//                NetworkResponse networkResponse = error.networkResponse;
+//                String errorMessage = "Failed to connect to server";
+//                if (networkResponse == null) {
+//                    if (error.getClass().equals(TimeoutError.class)) {
+//                        errorMessage = "Request timeout";
+//                    } else if (error.getClass().equals(NoConnectionError.class)) {
+//                        errorMessage = "Failed to connect to server";
+//                    }
+//                }
+//                //new ShowToast(LoginActivity.this,""+errorMessage).show();
+//            }
+//        }) {
+//            @Override
+//            public Map<String, String> getHeaders() throws AuthFailureError {
+//                HashMap<String, String> headers = new HashMap<String, String>();
+//                headers.put("Content-Type", "application/json");
+//                headers.put("token", Prefs.with(ProceedActivity.this).getString("token", ""));
+//                return headers;
+//            }
+//
+//        };
+//        AppControler.getInstance().addToRequestQueue(jsonObjReq, "set_profile");
+//    }
 
 }

@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 
 import com.hss.xservices.R;
 
-public class RewardsFragment extends Fragment {
+public class HistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.rewards_fragment,container,false);
+        View view = inflater.inflate(R.layout.history_fragment,container,false);
 
         return view;
     }

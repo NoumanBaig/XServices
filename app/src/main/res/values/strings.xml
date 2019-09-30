@@ -64,13 +64,14 @@
     <string name="order_no">Order No :</string>
     <string name="booked_on">Booked On :</string>
     <string name="my_orders">My Orders</string>
+    <string name="rewards">Rewards</string>
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
     <string name="last_name">Last Name</string>
     <string name="email">Email ID</string>
     <string name="gender">Gender</string>
     <string name="dob">DOB</string>
-    <string name="address">Address :</string>
+    <string name="address">Selected Address :</string>
     <string name="address1">Address 1</string>
     <string name="address2">Address 2</string>
     <string name="city">City</string>
@@ -80,7 +81,7 @@
     <string name="pincode">Pincode</string>
     <string name="landmark">Land Mark</string>
     <string name="welcome">Welcome</string>
-    <string name="adds_dts">Please provide address details</string>
+    <string name="adds_dts">address details</string>
     <string name="home">Home</string>
     <string name="work">Work</string>
     <string name="other">Other</string>
@@ -89,6 +90,9 @@
     <string name="type_own">Type your own</string>
     <string name="adds_name">Address Name</string>
     <string name="adds_mobile">Address Mobile</string>
+    <string name="redeem">Redeem</string>
+    <string name="earn">Earn</string>
+    <string name="history">History</string>
     <!--<string name="total_pay_amt"></string>-->
 
 
