@@ -3,19 +3,138 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.hss.xservices.utils.CustomFontTextView
-            android:text="@string/redeem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+       <LinearLayout
+           android:orientation="vertical"
+           android:gravity="center"
+           android:layout_width="match_parent"
+           android:layout_height="180dp">
+
+           <com.hss.xservices.utils.CustomFontTextView
+               android:text="500"
+               android:textColor="@color/colorPrimary"
+               android:textStyle="bold"
+               android:textSize="@dimen/textxxxlarge"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+           <com.hss.xservices.utils.CustomFontTextView
+               android:text="POINT BALANCE"
+               android:textColor="@color/colorPrimary"
+               android:textSize="@dimen/textlarge"
+               android:textStyle="bold"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+           <com.hss.xservices.utils.CustomFontTextView
+               android:text="1X - POINTS PER DOLLAR"
+               android:textColor="@color/colorPrimary"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content" />
+
+       </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/colorPrimary"/>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/background"
+            app:cardElevation="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:text="Earn   :   $100           98XXXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/background"
+            app:cardElevation="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:text="Earn   :   $100           98XXXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardBackgroundColor="@color/background"
+            app:cardElevation="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <com.hss.xservices.utils.CustomFontTextView
+                    android:text="Earn   :   $100           98XXXXXXXXXX"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
 
     </LinearLayout>
 

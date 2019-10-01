@@ -8,15 +8,15 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:gravity="center"
-        android:background="@color/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.hss.xservices.utils.CustomFontTextView
-            android:text="@string/earn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+       <androidx.recyclerview.widget.RecyclerView
+           android:id="@+id/recyclerEarn"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+
+       </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
