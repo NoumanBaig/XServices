@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.Spanned;
@@ -70,7 +71,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @BindView(R.id.txt_address)
     TextView txt_address;
     double price = 0;
-    int id=0;
+    int id=0,ads_id=0;
     long dateOrgin;
     String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime,adds_name,adds_mobile,adds_adds;
     ArrayList<String> arr_fileName,arr_originalName,arr_photos;
@@ -108,6 +109,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             adds_name = Prefs.with(OrderSummaryActivity.this).getString("adds_name","");
             adds_mobile = Prefs.with(OrderSummaryActivity.this).getString("adds_mobile","");
             adds_adds = Prefs.with(OrderSummaryActivity.this).getString("adds_adds","");
+            ads_id = Prefs.with(OrderSummaryActivity.this).getInt("adds_id",0);
             imageSlider(arr_photos);
             price = Double.parseDouble(str_price);
             id = Integer.parseInt(str_id);
@@ -183,7 +185,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             jsonParams = new JSONObject();
             JSONObject object = new JSONObject();
             object.put("svcId",id);
-            object.put("addressId",36);
+            object.put("addressId",ads_id);
             object.put("svcCost",price);
             object.put("svcTax",0.00);
             object.put("startDateTime",sending_dateTime);
@@ -215,8 +217,14 @@ public class OrderSummaryActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
                     JSONObject jsonObject2 = jsonObject.getJSONObject("response");
                     String code = jsonObject2.optString("code");
+                    String message = jsonObject2.optString("message");
                     if (code.equalsIgnoreCase("OK")){
-
+                        Toast.makeText(OrderSummaryActivity.this, message, Toast.LENGTH_SHORT).show();
+                        JSONObject data = jsonObject2.getJSONObject("data");
+                        String orderCode = data.optString("orderCode");
+                        Prefs.with(OrderSummaryActivity.this).save("orderCode",orderCode);
+                        startActivity(new Intent(OrderSummaryActivity.this,MyOrdersActivity.class));
+                        finish();
                     }else {
                         Log.e("not OK","-->");
                     }

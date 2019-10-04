@@ -137,6 +137,7 @@ public class ServiceDescriptionActivity extends AppCompatActivity {
                             arr_photos.add(object.optString("photoFileName"));
                         }
                         txt_title.setText(svcTitle);
+                        str_title = svcTitle;
                         Spanned html_text = Html.fromHtml(svcDescription);
                         txt_serviceDesc.setText(html_text);
                         txt_servicePrice.setText("$"+hourRate);

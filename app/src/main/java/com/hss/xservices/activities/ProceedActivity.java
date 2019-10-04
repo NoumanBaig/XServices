@@ -3,6 +3,7 @@ package com.hss.xservices.activities;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,12 +41,15 @@ import com.android.volley.Response;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.hss.xservices.R;
 import com.hss.xservices.adapters.AddressAdapter;
 import com.hss.xservices.adapters.SliderAdapter;
+import com.hss.xservices.models.Addresses;
+import com.hss.xservices.models.Profile;
 import com.hss.xservices.rest.AppControler;
 import com.hss.xservices.utils.Constants;
 import com.hss.xservices.utils.Prefs;
@@ -78,6 +82,8 @@ public class ProceedActivity extends AppCompatActivity {
     SliderView sliderView;
     @BindView(R.id.txt_title)
     TextView txt_title;
+    @BindView(R.id.cardview)
+    CardView cardview;
     @BindView(R.id.txt)
     TextView txt;
     @BindView(R.id.txt_name)
@@ -86,15 +92,16 @@ public class ProceedActivity extends AppCompatActivity {
     TextView txt_mobile;
     @BindView(R.id.txt_address)
     TextView txt_address;
-//    @BindView(R.id.recyclerAddress)
+    //    @BindView(R.id.recyclerAddress)
 //    RecyclerView recyclerView;
-    String str_title,str_image;
+    String str_title, str_image;
     ArrayList<String> arr_photos;
     double latitude, longitude;
     @BindView(R.id.checkbox)
     CheckBox checkbox;
-    String str_address_type="",str_check="";
-    ArrayList<String> arr_adds_name,arr_name,arr_mobile,arr_address;
+    String str_address_type = "", str_check = "";
+    int ads_id=0;
+    ArrayList<String> arr_adds_name, arr_name, arr_mobile, arr_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +114,7 @@ public class ProceedActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getLocation();
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             arr_photos = new ArrayList<>();
             str_image = getIntent().getStringExtra("image");
             str_title = getIntent().getStringExtra("title");
@@ -117,7 +124,8 @@ public class ProceedActivity extends AppCompatActivity {
             txt_title.setText(str_title);
             imageSlider(arr_photos);
         }
-       setAddress();
+        setAddress();
+        getProfile();
 //        checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
 //            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -127,19 +135,19 @@ public class ProceedActivity extends AppCompatActivity {
 //            }
 //        })
 
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        AddressAdapter addressAdapter = new AddressAdapter(this);
-//        recyclerView.setAdapter(addressAdapter);
+//
     }
 
-    private void setAddress(){
-        if (!Prefs.with(ProceedActivity.this).getString("adds_name","").equalsIgnoreCase("")){
-            txt_name.setText(""+Prefs.with(ProceedActivity.this).getString("adds_name",""));
-            txt.setText(""+Prefs.with(ProceedActivity.this).getString("adds_type",""));
-            txt_mobile.setText(""+Prefs.with(ProceedActivity.this).getString("adds_mobile",""));
-            txt_address.setText(""+Prefs.with(ProceedActivity.this).getString("adds_adds",""));
-        }else {
-            Log.e("Else---->","--->");
+    private void setAddress() {
+        if (!Prefs.with(ProceedActivity.this).getString("adds_name", "").equalsIgnoreCase("")) {
+            cardview.setVisibility(View.VISIBLE);
+            txt_name.setText("" + Prefs.with(ProceedActivity.this).getString("adds_name", ""));
+            txt.setText("" + Prefs.with(ProceedActivity.this).getString("adds_type", ""));
+            txt_mobile.setText("" + Prefs.with(ProceedActivity.this).getString("adds_mobile", ""));
+            txt_address.setText("" + Prefs.with(ProceedActivity.this).getString("adds_adds", ""));
+        } else {
+            cardview.setVisibility(View.GONE);
+            Log.e("Else---->", "--->");
         }
     }
 
@@ -153,17 +161,20 @@ public class ProceedActivity extends AppCompatActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_addAddress:
-               // startActivity(new Intent(this, ProfileActivity.class));
+                // startActivity(new Intent(this, ProfileActivity.class));
                 startActivityForResult(new LocationPickerActivity.Builder()
                         .withLocation(latitude, longitude).withSatelliteViewHidden().shouldReturnOkOnBackPressed()
                         .withGooglePlacesEnabled()
                         .build(ProceedActivity.this), 1);
                 break;
             case R.id.btn_schedule:
-                if (!checkbox.isChecked()){
+                if (!checkbox.isChecked()) {
                     Toast.makeText(this, "Please select address", Toast.LENGTH_SHORT).show();
-                }else {
-                    startActivity(new Intent(this, ScheduleActivity.class).putStringArrayListExtra("arr_photos",arr_photos));
+                } else if (cardview.getVisibility() == View.GONE) {
+                    Toast.makeText(this, "Please add address", Toast.LENGTH_SHORT).show();
+                } else {
+                    startActivity(new Intent(this, ScheduleActivity.class)
+                            .putStringArrayListExtra("arr_photos", arr_photos));
                 }
                 break;
             default:
@@ -173,7 +184,7 @@ public class ProceedActivity extends AppCompatActivity {
     }
 
     private void imageSlider(ArrayList<String> arrayList) {
-        final SliderAdapter adapter = new SliderAdapter(ProceedActivity.this,arrayList,"true");
+        final SliderAdapter adapter = new SliderAdapter(ProceedActivity.this, arrayList, "true");
         sliderView.setSliderAdapter(adapter);
         sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
             @Override
@@ -242,8 +253,8 @@ public class ProceedActivity extends AppCompatActivity {
         }
     }
 
-    private void showDialog(String address){
-        final Dialog alertDialog=new Dialog(ProceedActivity.this,android.R.style.Theme_Material_Light_Dialog_NoActionBar);
+    private void showDialog(String address) {
+        final Dialog alertDialog = new Dialog(ProceedActivity.this, android.R.style.Theme_Material_Light_Dialog_NoActionBar);
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alertDialog.setContentView(R.layout.address_dialog);
         alertDialog.setCancelable(false);
@@ -253,22 +264,22 @@ public class ProceedActivity extends AppCompatActivity {
         wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
         window.setAttributes(wlp);
         alertDialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        TextView txt_address=(TextView)alertDialog.findViewById(R.id.txt_address);
-        EditText edt_addsName =(EditText)alertDialog.findViewById(R.id.edt_addsName);
-        EditText edt_addsMobile =(EditText)alertDialog.findViewById(R.id.edt_addsMobile);
-        EditText edt_own =(EditText)alertDialog.findViewById(R.id.edt_own);
-        RadioButton radio_home =(RadioButton)alertDialog.findViewById(R.id.radio_home);
-        RadioButton radio_work =(RadioButton)alertDialog.findViewById(R.id.radio_work);
-        RadioButton radio_other =(RadioButton)alertDialog.findViewById(R.id.radio_other);
-        Button btn_save=(Button)alertDialog.findViewById(R.id.btn_save);
-        Button btn_cancel=(Button)alertDialog.findViewById(R.id.btn_cancel);
+        TextView txt_address = (TextView) alertDialog.findViewById(R.id.txt_address);
+        EditText edt_addsName = (EditText) alertDialog.findViewById(R.id.edt_addsName);
+        EditText edt_addsMobile = (EditText) alertDialog.findViewById(R.id.edt_addsMobile);
+        EditText edt_own = (EditText) alertDialog.findViewById(R.id.edt_own);
+        RadioButton radio_home = (RadioButton) alertDialog.findViewById(R.id.radio_home);
+        RadioButton radio_work = (RadioButton) alertDialog.findViewById(R.id.radio_work);
+        RadioButton radio_other = (RadioButton) alertDialog.findViewById(R.id.radio_other);
+        Button btn_save = (Button) alertDialog.findViewById(R.id.btn_save);
+        Button btn_cancel = (Button) alertDialog.findViewById(R.id.btn_cancel);
 
-        txt_address.setText(""+address);
+        txt_address.setText("" + address);
 
         radio_home.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     str_address_type = buttonView.getText().toString();
                 }
             }
@@ -276,7 +287,7 @@ public class ProceedActivity extends AppCompatActivity {
         radio_work.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     str_address_type = buttonView.getText().toString();
                 }
             }
@@ -284,9 +295,9 @@ public class ProceedActivity extends AppCompatActivity {
         radio_other.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
+                if (isChecked) {
                     edt_own.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     edt_own.setVisibility(View.GONE);
                 }
             }
@@ -302,29 +313,128 @@ public class ProceedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 str_address_type = edt_own.getText().toString();
-                if (edt_addsName.getText().toString().equalsIgnoreCase("")){
+                if (edt_addsName.getText().toString().equalsIgnoreCase("")) {
 
                     Toast.makeText(ProceedActivity.this, "Please enter Name", Toast.LENGTH_SHORT).show();
-                }else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")){
+                } else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")) {
                     Toast.makeText(ProceedActivity.this, "Please enter Mobile Number", Toast.LENGTH_SHORT).show();
-                }
-                else if (radio_other.isChecked()){
-                    if (edt_own.getText().toString().equalsIgnoreCase("")){
+                } else if (radio_other.isChecked()) {
+                    if (edt_own.getText().toString().equalsIgnoreCase("")) {
                         Toast.makeText(ProceedActivity.this, "Please enter Address Name", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     alertDialog.dismiss();
+                    cardview.setVisibility(View.VISIBLE);
 //                    Toast.makeText(ProceedActivity.this, "Very good", Toast.LENGTH_SHORT).show();
-                    Prefs.with(ProceedActivity.this).save("adds_name",edt_addsName.getText().toString());
-                    Prefs.with(ProceedActivity.this).save("adds_mobile",edt_addsMobile.getText().toString());
-                    Prefs.with(ProceedActivity.this).save("adds_type",str_address_type);
-                    Prefs.with(ProceedActivity.this).save("adds_adds",address);
-                    setAddress();
+                    Prefs.with(ProceedActivity.this).save("adds_name", edt_addsName.getText().toString());
+                    Prefs.with(ProceedActivity.this).save("adds_mobile", edt_addsMobile.getText().toString());
+                    Prefs.with(ProceedActivity.this).save("adds_type", str_address_type);
+                    Prefs.with(ProceedActivity.this).save("adds_adds", address);
+                     setAddress();
                 }
             }
         });
         alertDialog.show();
     }
+
+    private void getProfile() {
+
+        String token = Prefs.with(ProceedActivity.this).getString("token", "");
+        Log.e("token", "" + token);
+
+        StringRequest jsonObjReq = new StringRequest(Request.Method.GET,
+                Constants.BASE_URL + "/customer/profile", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                Log.e("getProfile", "" + response);
+                List<Profile> profileList = new ArrayList<>();
+                List<Addresses> addressesList = new ArrayList<>();
+
+                try {
+                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
+                    JSONObject jsonObject2 = jsonObject.getJSONObject("response");
+                    String code = jsonObject2.optString("code");
+                    if (code.equalsIgnoreCase("OK")) {
+                        JSONObject data = jsonObject2.getJSONObject("data");
+                        JSONObject profile_obj = data.getJSONObject("profile");
+
+                        Profile profile = new Profile();
+                        profile.setUserId(profile_obj.optInt("userId"));
+                        profile.setMobile(profile_obj.optString("mobile"));
+                        profile.setEmail(profile_obj.optString("email"));
+                        profile.setFirstName(profile_obj.optString("firstName"));
+                        profile.setLastName(profile_obj.optString("lastName"));
+                        profile.setAddOn(profile_obj.optString("addOn"));
+                        profile.setEditOn(profile_obj.optString("editOn"));
+
+                        JSONArray array = profile_obj.getJSONArray("addressess");
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject object = array.getJSONObject(i);
+                            Addresses addresses = new Addresses();
+                            addresses.setAddressId(object.optInt("addressId"));
+                            ads_id = object.optInt("addressId");
+                            addresses.setCountry(object.optString("country"));
+                            addresses.setProvince(object.optString("province"));
+                            addresses.setCity(object.optString("city"));
+                            addresses.setPin(object.optString("pin"));
+                            addresses.setAddress1(object.optString("address1"));
+                            addresses.setAddress2(object.optString("address2"));
+                            addresses.setLandmark(object.optString("landmark"));
+                            addresses.setGeoLocLat(object.optString("geoLocLat"));
+                            addresses.setGeoLocLon(object.optString("geoLocLon"));
+                            addresses.setAddOn(object.optString("addOn"));
+                            addresses.setEditOn(object.optString("editOn"));
+                            addressesList.add(addresses);
+                            profile.setAddressess(addressesList);
+                        }
+                        profileList.add(profile);
+                        Prefs.with(ProceedActivity.this).save("adds_id", ads_id);
+//                        if (addressesList.size()>0){
+//                            recyclerView.setLayoutManager(new LinearLayoutManager(ProceedActivity.this));
+//                            AddressAdapter addressAdapter = new AddressAdapter(ProceedActivity.this,addressesList);
+//                            recyclerView.setAdapter(addressAdapter);
+//                        }else {
+//                            Toast.makeText(ProceedActivity.this, "Please add address", Toast.LENGTH_SHORT).show();
+//                        }
+
+
+                    } else {
+                        Log.e("not OK", "-->");
+                    }
+                } catch (JSONException e) {
+                    Log.e("JSONException", "" + e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("F_resAdsList", "" + error);
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Failed to connect to server";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect to server";
+                    }
+                }
+                // Toast.makeText(getActivity(), ""+errorMessage, Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", token);
+                return headers;
+            }
+        };
+        AppControler.getInstance().addToRequestQueue(jsonObjReq, "get_profile");
+    }
+
 
 //    private void saveAddress(){
 //        ProgressDialog dialog = new ProgressDialog(this);
