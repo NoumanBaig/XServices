@@ -117,6 +117,7 @@
                         <com.hss.xservices.utils.CustomFontTextView
                             android:text="@string/service_desc2"
                             android:textColor="@color/colorPrimary"
+                            android:textStyle="bold"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
 
