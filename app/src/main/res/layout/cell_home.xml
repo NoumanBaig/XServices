@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
-    app:cardCornerRadius="10dp"
-    app:cardBackgroundColor="@color/background"
+    app:cardCornerRadius="5dp"
     app:cardElevation="3dp"
     app:cardUseCompatPadding="true"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,22 +18,24 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="0.6"
+            android:layout_weight="0.5"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
-            
+            android:gravity="center"
+            android:layout_height="100dp">
+
             <ImageView
                 android:id="@+id/img"
                 android:scaleType="fitXY"
                 android:src="@drawable/service_two"
                 android:layout_width="match_parent"
-                android:layout_height="100dp" />
+                android:layout_height="match_parent" />
+
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weight="1.4"
+            android:layout_weight="1.5"
             android:layout_width="0dp"
             android:gravity="center_vertical"
             android:layout_height="match_parent">

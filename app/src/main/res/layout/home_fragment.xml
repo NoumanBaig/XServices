@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:background="@color/white"
+        android:elevation="5dp"
         android:weightSum="2">
 
         <LinearLayout
@@ -66,6 +68,10 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gray"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="200dp">
@@ -86,6 +92,15 @@
             app:sliderIndicatorUnselectedColor="@color/white"
             app:sliderScrollTimeInSec="4"
             app:sliderStartAutoCycle="true" />
+
+        <com.hss.xservices.utils.CustomFontTextView
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:padding="10dp"
+            android:textColor="@color/white"
+            android:background="@color/transparent"
+            android:layout_height="wrap_content" />
 
     </FrameLayout>
 
@@ -116,15 +131,25 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:text="Services"
+            android:elevation="5dp"
+            android:background="@color/white"
             android:textColor="@color/colorPrimary"
             android:textSize="@dimen/textmed"
             android:textStyle="bold" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerServices"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:background="@color/background"
             android:paddingRight="5dp">
 
         </androidx.recyclerview.widget.RecyclerView>

@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hss.xservices.R;
 import com.hss.xservices.activities.ServiceDescriptionActivity;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.CategoryViewholder> {
 
@@ -46,9 +49,17 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.Catego
             }
         });
 
-        holder.txt_booked_on.setText(""+arr_date.get(position));
+        String timeDate = parseTime(arr_date.get(position));
+        holder.txt_booked_on.setText(""+timeDate);
         holder.txt_order_no.setText(""+arr_ordeNo.get(position));
-        holder.txt_status.setText(""+arr_status.get(position));
+        if (arr_status.get(position).equalsIgnoreCase("1")){
+            holder.txt_status.setBackgroundColor(mContext.getResources().getColor(R.color.green));
+            holder.txt_status.setText("Processing");
+        }else {
+            holder.txt_status.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccent));
+            holder.txt_status.setText("In Process");
+        }
+
 
     }
 
@@ -80,4 +91,24 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.Catego
 //    public void setOnCardClickListner(OnCardClickListner onCardClickListner) {
 //        this.onCardClickListner = onCardClickListner;
 //    }
+
+    public String parseTime(String time) {
+        String inputPattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+        String outputPattern = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return str;
+    }
+
 }

@@ -54,7 +54,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     SliderView sliderView;
     @BindView(R.id.txt_title)
     TextView txt_title;
-//    @BindView(R.id.txt_serviceName)
+    //    @BindView(R.id.txt_serviceName)
 //    TextView txt_serviceName;
     @BindView(R.id.txt_serviceDesc)
     TextView txt_serviceDesc;
@@ -71,10 +71,11 @@ public class OrderSummaryActivity extends AppCompatActivity {
     @BindView(R.id.txt_address)
     TextView txt_address;
     double price = 0;
-    int id=0,ads_id=0;
+    int id = 0, ads_id = 0;
     long dateOrgin;
-    String str_title,str_desc,str_price,str_image,str_date,str_time,str_id,sending_dateTime,adds_name,adds_mobile,adds_adds;
-    ArrayList<String> arr_fileName,arr_originalName,arr_photos;
+    String str_title, str_desc, str_price, str_image, str_date, str_time, str_id, sending_dateTime, adds_name, adds_mobile, adds_adds,
+            str_new_date;
+    ArrayList<String> arr_fileName, arr_originalName, arr_photos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +88,11 @@ public class OrderSummaryActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if (getIntent().getExtras() != null){
+        if (getIntent().getExtras() != null) {
             arr_fileName = new ArrayList<>();
             arr_originalName = new ArrayList<>();
             arr_photos = new ArrayList<>();
-           // sending_dateTime = getIntent().getStringExtra("sending_dateTime");
+            // sending_dateTime = getIntent().getStringExtra("sending_dateTime");
             str_date = getIntent().getStringExtra("date");
             str_time = getIntent().getStringExtra("time");
 
@@ -99,45 +100,51 @@ public class OrderSummaryActivity extends AppCompatActivity {
             arr_originalName = getIntent().getStringArrayListExtra("arr_originalName");
             arr_photos = getIntent().getStringArrayListExtra("arr_photos");
 
-            Log.e("arr_fileName",""+arr_fileName);
-            Log.e("arr_originalName",""+arr_originalName);
-            str_id = Prefs.with(OrderSummaryActivity.this).getString("str_id","");
+            Log.e("str_date", "" + str_date);
+            Log.e("str_time", "" + str_time);
+            Log.e("arr_fileName", "" + arr_fileName);
+            Log.e("arr_originalName", "" + arr_originalName);
+            str_id = Prefs.with(OrderSummaryActivity.this).getString("str_id", "");
             //str_image = Prefs.with(OrderSummaryActivity.this).getString("image","");
-            str_title = Prefs.with(OrderSummaryActivity.this).getString("title","");
-            str_desc = Prefs.with(OrderSummaryActivity.this).getString("description","");
-            str_price = Prefs.with(OrderSummaryActivity.this).getString("price","");
-            adds_name = Prefs.with(OrderSummaryActivity.this).getString("adds_name","");
-            adds_mobile = Prefs.with(OrderSummaryActivity.this).getString("adds_mobile","");
-            adds_adds = Prefs.with(OrderSummaryActivity.this).getString("adds_adds","");
-            ads_id = Prefs.with(OrderSummaryActivity.this).getInt("adds_id",0);
+            str_title = Prefs.with(OrderSummaryActivity.this).getString("title", "");
+            str_desc = Prefs.with(OrderSummaryActivity.this).getString("description", "");
+            str_price = Prefs.with(OrderSummaryActivity.this).getString("price", "");
+            adds_name = Prefs.with(OrderSummaryActivity.this).getString("adds_name", "");
+            adds_mobile = Prefs.with(OrderSummaryActivity.this).getString("adds_mobile", "");
+            adds_adds = Prefs.with(OrderSummaryActivity.this).getString("adds_adds", "");
+            ads_id = Prefs.with(OrderSummaryActivity.this).getInt("adds_id", 0);
             imageSlider(arr_photos);
             price = Double.parseDouble(str_price);
             id = Integer.parseInt(str_id);
 
-        //    Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
+            //    Picasso.get().load("http://3.83.243.193:3000/files/"+str_image).error(R.drawable.service).into(img);
             txt_title.setText(str_title);
             //txt_serviceName.setText(str_title);
             Spanned html_text = Html.fromHtml(str_desc);
             txt_serviceDesc.setText(html_text);
-            txt_servicePrice.setText("CAD "+str_price);
-            txt_serviceCost.setText("CAD "+str_price);
-            txt_serviceDate.setText(str_date+" "+str_time);
+            txt_servicePrice.setText("CAD " + str_price);
+            txt_serviceCost.setText("CAD " + str_price);
+            txt_serviceDate.setText(str_date + " " + str_time);
             txt_name.setText(adds_name);
             txt_address.setText(adds_adds);
             txt_mobile.setText(adds_mobile);
 
-            String expiryDateString = "2018-10-15T17:52:00Z";
-            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+//            2018-10-15T17:52:00.000Z
+            String date_str = str_date + "T" + str_time + ".000Z";
+            //String expiryDateString = sending_dateTime;
+            final SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US);
             formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date date = null;
             try {
-                date = formatter.parse(expiryDateString);
-                Log.e("date--->",""+date);
-                expiryDateString=formatter.format(date);
-                sending_dateTime=formatter.format(date);
-                Log.e("expiryDateString",""+expiryDateString);
+//                date = formatter.parse(sending_dateTime);
+                date = formatter.parse(date_str);
+                Log.e("date--->", "" + date);
+                //expiryDateString=formatter.format(date);
+                str_new_date = formatter.format(date);
+                Log.e("str_new_date", "" + str_new_date);
             } catch (ParseException e) {
                 e.printStackTrace();
+                Log.e("ParseException", "" + e);
             }
 
         }
@@ -150,7 +157,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
     }
 
     private void imageSlider(ArrayList<String> arrayList) {
-        final SliderAdapter adapter = new SliderAdapter(OrderSummaryActivity.this,arrayList,"true");
+        final SliderAdapter adapter = new SliderAdapter(OrderSummaryActivity.this, arrayList, "true");
         sliderView.setSliderAdapter(adapter);
         sliderView.setOnIndicatorClickListener(new DrawController.ClickListener() {
             @Override
@@ -161,21 +168,21 @@ public class OrderSummaryActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btn_confirmOrder)
-    public void onConfirmClick(View view){
-//        try {
-//            if (arr_fileName != null){
+    public void onConfirmClick(View view) {
+        try {
+            if (arr_fileName != null) {
                 orderRequest();
-//            }else {
-//                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+            } else {
+                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // startActivity(new Intent(this,MyOrdersActivity.class));
     }
 
-    private void orderRequest(){
+    private void orderRequest() {
         ProgressDialog dialog = new ProgressDialog(this);
         dialog.setMessage("Loading...");
         dialog.show();
@@ -184,25 +191,29 @@ public class OrderSummaryActivity extends AppCompatActivity {
         try {
             jsonParams = new JSONObject();
             JSONObject object = new JSONObject();
-            object.put("svcId",id);
-            object.put("addressId",ads_id);
-            object.put("svcCost",price);
-            object.put("svcTax",0.00);
-            object.put("startDateTime",sending_dateTime);
-            object.put("endDateTime",sending_dateTime);
+            object.put("svcId", id);
+            object.put("addressId", ads_id);
+            object.put("svcCost", price);
+            object.put("svcTax", 0.00);
+            object.put("startDateTime", str_new_date);
+            object.put("endDateTime", str_new_date);
 
+//            if (arr_fileName != null){
+//                if (arr_fileName.size()>=1){
             JSONArray array = new JSONArray();
             JSONObject object1 = new JSONObject();
-            for (int i=0; i<arr_fileName.size(); i++){
-                object1.put("photoFileName",arr_fileName.get(i));
-                object1.put("photoDispName",arr_originalName.get(i));
+            for (int i = 0; i < arr_fileName.size(); i++) {
+                object1.put("photoFileName", arr_fileName.get(i));
+                object1.put("photoDispName", arr_originalName.get(i));
                 array.put(object1);
             }
+            object.put("photos", array);
+//                }
 
-            object.put("photos",array);
-            jsonParams.put("request",object);
+//            }
+            jsonParams.put("request", object);
 
-            Log.e("jsonParams",""+jsonParams);
+            Log.e("jsonParams", "" + jsonParams);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -212,25 +223,26 @@ public class OrderSummaryActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 dialog.dismiss();
-                Log.e("orderRequest",""+response);
+                Log.e("orderRequest", "" + response);
                 try {
                     JSONObject jsonObject = new JSONObject(String.valueOf(response));
                     JSONObject jsonObject2 = jsonObject.getJSONObject("response");
                     String code = jsonObject2.optString("code");
                     String message = jsonObject2.optString("message");
-                    if (code.equalsIgnoreCase("OK")){
+                    if (code.equalsIgnoreCase("OK")) {
                         Toast.makeText(OrderSummaryActivity.this, message, Toast.LENGTH_SHORT).show();
                         JSONObject data = jsonObject2.getJSONObject("data");
                         String orderCode = data.optString("orderCode");
-                        Prefs.with(OrderSummaryActivity.this).save("orderCode",orderCode);
-                        startActivity(new Intent(OrderSummaryActivity.this,MyOrdersActivity.class));
-                        finish();
-                    }else {
-                        Log.e("not OK","-->");
+                        Prefs.with(OrderSummaryActivity.this).save("orderCode", orderCode);
+                        Intent intent = new Intent(OrderSummaryActivity.this, MyOrdersActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Log.e("not OK", "-->");
                     }
 
                 } catch (JSONException e) {
-                    Log.e("JSONException",""+e);
+                    Log.e("JSONException", "" + e);
                     e.printStackTrace();
                 }
             }

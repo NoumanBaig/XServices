@@ -30,7 +30,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,8 +63,16 @@ public class MyOrdersActivity extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        onBackPressed();
+       // onBackPressed();
+        startActivity(new Intent(this,HomeActivity.class));
+        finish();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(this,HomeActivity.class));
+        finish();
     }
 
     private void getOrders(){
@@ -99,9 +110,11 @@ public class MyOrdersActivity extends AppCompatActivity {
                         JSONArray array = data.getJSONArray("orders");
                         for (int i=0; i<array.length(); i++){
                             JSONObject object = array.getJSONObject(i);
-                            arr_orderNo.add(object.optString("orderCode"));
+                            arr_orderNo.add(object.optString("orderId"));
                             arr_status.add(object.optString("status"));
-                            arr_date.add(object.optString("addOn"));
+
+                            JSONObject object2 = object.getJSONObject("schedules");
+                            arr_date.add(object2.optString("startDateTime"));
                         }
                         recyclerView.setLayoutManager(new LinearLayoutManager(MyOrdersActivity.this));
                         MyOrdersAdapter myOrdersAdapter = new MyOrdersAdapter(MyOrdersActivity.this,arr_orderNo,arr_status,arr_date);
@@ -142,5 +155,6 @@ public class MyOrdersActivity extends AppCompatActivity {
         };
         AppControler.getInstance().addToRequestQueue(jsonObjReq, "my_orders");
     }
+
 
 }

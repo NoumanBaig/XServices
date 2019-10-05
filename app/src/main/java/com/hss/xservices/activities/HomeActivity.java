@@ -138,6 +138,7 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_my_orders:
                 startActivity(new Intent(HomeActivity.this, MyOrdersActivity.class));
+                finish();
                 break;
             case R.id.nav_rewards:
                 startActivity(new Intent(HomeActivity.this, RewardsActivity.class));

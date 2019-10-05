@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ScheduleActivity"
-    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <include layout="@layout/toolbar"/>
@@ -13,6 +12,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         android:fillViewport="true">
 
         <LinearLayout
@@ -20,13 +20,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:background="@color/background"
+                android:elevation="5dp"
+                android:layout_marginBottom="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/background"
-                app:cardElevation="5dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content">
 
                 <com.prolificinteractive.materialcalendarview.MaterialCalendarView
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -39,18 +38,15 @@
                     app:mcv_showOtherDates="decorated_disabled"
                     app:mcv_selectionColor="@color/colorAccent" />
 
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:background="@color/white"
+                android:elevation="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/background"
-                app:cardElevation="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:weightSum="2"
@@ -113,18 +109,15 @@
 
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:background="@color/white"
+                android:elevation="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/background"
-                app:cardElevation="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -232,18 +225,15 @@
 
                     </LinearLayout>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:background="@color/white"
+                android:elevation="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                app:cardBackgroundColor="@color/background"
-                app:cardElevation="5dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -276,11 +266,12 @@
 
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
             <com.hss.xservices.utils.CustomFontButton
                 android:background="@color/colorAccent"
                 android:layout_margin="20dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/white"
                 android:id="@+id/btn_continue"
                 android:text="@string/continu"

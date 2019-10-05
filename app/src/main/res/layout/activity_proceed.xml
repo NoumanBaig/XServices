@@ -53,6 +53,7 @@
 
         <androidx.core.widget.NestedScrollView
             android:fillViewport="true"
+            android:background="@color/background"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -64,10 +65,13 @@
         <com.hss.xservices.utils.CustomFontTextView
             android:padding="10dp"
             android:gravity="center"
+            android:background="@color/white"
             android:text="@string/select_address"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
+            android:elevation="5dp"
             android:textSize="16sp"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

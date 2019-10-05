@@ -145,16 +145,16 @@ public class ScheduleActivity extends AppCompatActivity {
         month = CalendarDay.today().getMonth();
         year = CalendarDay.today().getYear();
         str_day = day + "-" + month + "-" + year;
-        snd_date = year + "-" + month + "-" + day;
-        Log.e("str_day", "" + str_day);
+//        snd_date = year + "-" + month + "-" + day;
+//        Log.e("str_day", "" + str_day);
 
         txt_date.setText(str_day);
         str_time = getCurrentTime();
-        snd_time = getCurrentTime2();
+//        snd_time = getCurrentTime2();
         txt_time.setText(str_time);
 
-        sending_dateTime = snd_date+"T"+snd_time+".000Z";
-        Log.e("sending_dateTime", "" + sending_dateTime);
+//        sending_dateTime = snd_date+"T"+snd_time+".000Z";
+//        Log.e("sending_dateTime", "" + sending_dateTime);
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -163,15 +163,15 @@ public class ScheduleActivity extends AppCompatActivity {
                 month = date.getMonth();
                 year = date.getYear();
                 str_day = day + "-" + month + "-" + year;
-                Log.e("str_day", "" + str_day);
-                snd_date = year + "-" + month + "-" + day;
+//                Log.e("str_day", "" + str_day);
+//                snd_date = year + "-" + month + "-" + day;
                 txt_date.setText(str_day);
-                str_time = getCurrentTime();
-                snd_time = getCurrentTime2();
+//                str_time = getCurrentTime();
+//                snd_time = getCurrentTime2();
               //  txt_time.setText(str_time);
 
-                sending_dateTime = snd_date+"T"+snd_time+".000Z";
-                Log.e("sending_dateTime", "" + sending_dateTime);
+//                sending_dateTime = snd_date+"T"+snd_time+".000Z";
+//                Log.e("sending_dateTime", "" + sending_dateTime);
             }
         });
 
@@ -188,9 +188,9 @@ public class ScheduleActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btn_continue:
                 startActivity(new Intent(this, OrderSummaryActivity.class)
-                        .putExtra("date", str_day)
-                        .putExtra("time", str_time)
-                        .putExtra("sending_dateTime", sending_dateTime)
+                        .putExtra("date", parseTime3(txt_date.getText().toString()))
+                        .putExtra("time", parseTime2(txt_time.getText().toString()))
+//                        .putExtra("sending_dateTime", sending_dateTime)
                 .putStringArrayListExtra("arr_fileName",arr_fileName)
                         .putStringArrayListExtra("arr_originalName",arr_originalName)
                         .putStringArrayListExtra("arr_photos",arr_photos));
@@ -221,6 +221,42 @@ public class ScheduleActivity extends AppCompatActivity {
     public String parseTime(String time) {
         String inputPattern = "HH:mm";
         String outputPattern = "hh:mm a";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return str;
+    }
+    public String parseTime2(String time) {
+        String inputPattern = "hh:mm a";
+        String outputPattern = "hh:mm:ss";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return str;
+    }
+    public String parseTime3(String time) {
+        String inputPattern = "dd-mm-yyyy";
+        String outputPattern = "yyyy-mm-dd";
         SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
         SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
 

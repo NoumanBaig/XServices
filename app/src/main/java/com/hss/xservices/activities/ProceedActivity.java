@@ -318,7 +318,7 @@ public class ProceedActivity extends AppCompatActivity {
                 String adds_mob = edt_addsMobile.getText().toString();
                 if (adds_name.equalsIgnoreCase("")) {
                     adds_name = str_firstname;
-                } else if (adds_mob.equalsIgnoreCase("")) {
+                } else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")) {
                     adds_mob = str_mobile;
                 } else if (radio_other.isChecked()) {
                     if (edt_own.getText().toString().equalsIgnoreCase("")) {
