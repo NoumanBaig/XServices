@@ -5,11 +5,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.app.TimePickerDialog;
 import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,6 +40,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.hss.xservices.R;
+import com.hss.xservices.fragments.TimePickerFragment;
 import com.hss.xservices.utils.Constants;
 import com.hss.xservices.utils.Prefs;
 import com.hss.xservices.utils.VolleyMultipartRequest;
@@ -62,9 +66,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -75,6 +81,8 @@ import butterknife.OnClick;
 
 public class ScheduleActivity extends AppCompatActivity {
 
+    @BindView(R.id.layout_time)
+    LinearLayout layout_time;
     @BindView(R.id.calendarView)
     MaterialCalendarView calendarView;
     int day, month, year;
@@ -118,7 +126,7 @@ public class ScheduleActivity extends AppCompatActivity {
 
     public static String getCurrentTime() {
         //date output format
-        DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss a");
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
         Calendar cal = Calendar.getInstance();
         return dateFormat.format(cal.getTime());
     }
@@ -160,7 +168,7 @@ public class ScheduleActivity extends AppCompatActivity {
                 txt_date.setText(str_day);
                 str_time = getCurrentTime();
                 snd_time = getCurrentTime2();
-                txt_time.setText(str_time);
+              //  txt_time.setText(str_time);
 
                 sending_dateTime = snd_date+"T"+snd_time+".000Z";
                 Log.e("sending_dateTime", "" + sending_dateTime);
@@ -175,7 +183,7 @@ public class ScheduleActivity extends AppCompatActivity {
         return true;
     }
 
-    @OnClick({R.id.btn_continue, R.id.layout_addPhoto, R.id.img_camera})
+    @OnClick({R.id.btn_continue, R.id.layout_addPhoto, R.id.img_camera, R.id.layout_time})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_continue:
@@ -193,10 +201,40 @@ public class ScheduleActivity extends AppCompatActivity {
             case R.id.img_camera:
                // requestCameraPermission();
                 break;
+            case R.id.layout_time:
+                final Calendar calendar = Calendar.getInstance();
+               TimePickerDialog dialog = new TimePickerDialog(ScheduleActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                   @Override
+                   public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                       String time = hourOfDay+":"+minute;
+                       txt_time.setText(parseTime(time));
+                   }
+               },calendar.get(Calendar.HOUR_OF_DAY),calendar.get(Calendar.MINUTE),false);
+               dialog.show();
+                break;
             default:
                 break;
 
         }
+    }
+
+    public String parseTime(String time) {
+        String inputPattern = "HH:mm";
+        String outputPattern = "hh:mm a";
+        SimpleDateFormat inputFormat = new SimpleDateFormat(inputPattern);
+        SimpleDateFormat outputFormat = new SimpleDateFormat(outputPattern);
+
+        Date date = null;
+        String str = null;
+
+        try {
+            date = inputFormat.parse(time);
+            str = outputFormat.format(date);
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+        }
+        return str;
     }
 
 

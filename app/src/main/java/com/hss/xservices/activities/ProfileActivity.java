@@ -98,6 +98,7 @@ public class ProfileActivity extends AppCompatActivity implements DatePickerDial
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(ProfileActivity.this,android.R.layout.simple_spinner_item,gender);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
+
     }
 
     @Override

@@ -100,8 +100,9 @@ public class ProceedActivity extends AppCompatActivity {
     @BindView(R.id.checkbox)
     CheckBox checkbox;
     String str_address_type = "", str_check = "";
-    int ads_id=0;
+    int ads_id = 0;
     ArrayList<String> arr_adds_name, arr_name, arr_mobile, arr_address;
+    String str_mobile, str_firstname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -313,11 +314,12 @@ public class ProceedActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 str_address_type = edt_own.getText().toString();
-                if (edt_addsName.getText().toString().equalsIgnoreCase("")) {
-
-                    Toast.makeText(ProceedActivity.this, "Please enter Name", Toast.LENGTH_SHORT).show();
-                } else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")) {
-                    Toast.makeText(ProceedActivity.this, "Please enter Mobile Number", Toast.LENGTH_SHORT).show();
+                String adds_name = edt_addsName.getText().toString();
+                String adds_mob = edt_addsMobile.getText().toString();
+                if (adds_name.equalsIgnoreCase("")) {
+                    adds_name = str_firstname;
+                } else if (adds_mob.equalsIgnoreCase("")) {
+                    adds_mob = str_mobile;
                 } else if (radio_other.isChecked()) {
                     if (edt_own.getText().toString().equalsIgnoreCase("")) {
                         Toast.makeText(ProceedActivity.this, "Please enter Address Name", Toast.LENGTH_SHORT).show();
@@ -326,11 +328,11 @@ public class ProceedActivity extends AppCompatActivity {
                     alertDialog.dismiss();
                     cardview.setVisibility(View.VISIBLE);
 //                    Toast.makeText(ProceedActivity.this, "Very good", Toast.LENGTH_SHORT).show();
-                    Prefs.with(ProceedActivity.this).save("adds_name", edt_addsName.getText().toString());
-                    Prefs.with(ProceedActivity.this).save("adds_mobile", edt_addsMobile.getText().toString());
+                    Prefs.with(ProceedActivity.this).save("adds_name", adds_name);
+                    Prefs.with(ProceedActivity.this).save("adds_mobile", adds_mob);
                     Prefs.with(ProceedActivity.this).save("adds_type", str_address_type);
                     Prefs.with(ProceedActivity.this).save("adds_adds", address);
-                     setAddress();
+                    setAddress();
                 }
             }
         });
@@ -367,6 +369,9 @@ public class ProceedActivity extends AppCompatActivity {
                         profile.setLastName(profile_obj.optString("lastName"));
                         profile.setAddOn(profile_obj.optString("addOn"));
                         profile.setEditOn(profile_obj.optString("editOn"));
+
+                        str_firstname = profile_obj.optString("firstName");
+                        str_mobile = profile_obj.optString("mobile");
 
                         JSONArray array = profile_obj.getJSONArray("addressess");
                         for (int i = 0; i < array.length(); i++) {

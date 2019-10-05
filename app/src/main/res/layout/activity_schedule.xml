@@ -90,6 +90,7 @@
                         android:orientation="horizontal"
                         android:layout_width="0dp"
                         android:gravity="right"
+                        android:id="@+id/layout_time"
                         android:layout_height="wrap_content">
                         <com.hss.xservices.utils.CustomFontTextView
                             android:text="@string/selected_time"

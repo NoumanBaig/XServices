@@ -162,15 +162,15 @@ public class OrderSummaryActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_confirmOrder)
     public void onConfirmClick(View view){
-        try {
-            if (arr_fileName != null){
+//        try {
+//            if (arr_fileName != null){
                 orderRequest();
-            }else {
-                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            }else {
+//                Toast.makeText(this, "Please upload picture", Toast.LENGTH_SHORT).show();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
         // startActivity(new Intent(this,MyOrdersActivity.class));
     }
