@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hss.xservices.R;
+import com.hss.xservices.activities.OrderDetailsActivity;
 import com.hss.xservices.activities.ServiceDescriptionActivity;
 
 import java.text.ParseException;
@@ -42,14 +43,17 @@ public class MyOrdersAdapter extends RecyclerView.Adapter<MyOrdersAdapter.Catego
 
     @Override
     public void onBindViewHolder(@NonNull CategoryViewholder holder, int position) {
-
+        String timeDate = parseTime(arr_date.get(position));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mContext.startActivity(new Intent(mContext, OrderDetailsActivity.class)
+                        .putExtra("order_id",arr_ordeNo.get(position))
+                        .putExtra("order_date",timeDate));
             }
         });
 
-        String timeDate = parseTime(arr_date.get(position));
+
         holder.txt_booked_on.setText(""+timeDate);
         holder.txt_order_no.setText(""+arr_ordeNo.get(position));
         if (arr_status.get(position).equalsIgnoreCase("1")){

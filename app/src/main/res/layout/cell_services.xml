@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:id="@+id/cardview"
+    android:foreground="?attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
@@ -26,7 +27,6 @@
                 android:id="@+id/img"
                 android:scaleType="fitXY"
                 android:padding="5dp"
-                android:src="@drawable/service_two"
                 android:layout_width="match_parent"
                 android:layout_height="100dp" />
 
@@ -48,7 +48,6 @@
                 android:textStyle="bold"
                 android:singleLine="true"
                 android:maxLines="1"
-                android:text="Service Name"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -59,7 +58,6 @@
                 android:textSize="12sp"
                 android:maxLines="3"
                 android:marqueeRepeatLimit="marquee_forever"
-                android:text="explanation service going to be the honour"
                 android:id="@+id/txt_subHeading"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"

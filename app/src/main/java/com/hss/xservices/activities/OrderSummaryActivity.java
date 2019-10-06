@@ -112,7 +112,7 @@ public class OrderSummaryActivity extends AppCompatActivity {
             adds_name = Prefs.with(OrderSummaryActivity.this).getString("adds_name", "");
             adds_mobile = Prefs.with(OrderSummaryActivity.this).getString("adds_mobile", "");
             adds_adds = Prefs.with(OrderSummaryActivity.this).getString("adds_adds", "");
-            ads_id = Prefs.with(OrderSummaryActivity.this).getInt("adds_id", 0);
+            ads_id = Prefs.with(OrderSummaryActivity.this).getInt("adds_id", 36);
             imageSlider(arr_photos);
             price = Double.parseDouble(str_price);
             id = Integer.parseInt(str_id);

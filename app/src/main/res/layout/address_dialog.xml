@@ -91,6 +91,8 @@
             android:hint="@string/type_own"
             android:id="@+id/edt_own"
             android:visibility="gone"
+            android:inputType="textCapWords"
+            android:imeOptions="actionDone"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_width="match_parent"
@@ -107,7 +109,7 @@
                 android:id="@+id/edt_addsName"
                 android:hint="@string/adds_name"
                 android:inputType="textCapWords"
-                android:imeOptions="actionNext"
+                android:imeOptions="actionDone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

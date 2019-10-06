@@ -114,7 +114,7 @@ public class ProceedActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getLocation();
+       // getLocation();
         if (getIntent().getExtras() != null) {
             arr_photos = new ArrayList<>();
             str_image = getIntent().getStringExtra("image");
@@ -212,7 +212,7 @@ public class ProceedActivity extends AppCompatActivity {
                             longitude = location.getLongitude();
                             Log.e("latitude", "" + latitude);
                             Log.e("longitude", "" + longitude);
-                            String address = getAddressFromLatLng(latitude, longitude);
+                           // String address = getAddressFromLatLng(latitude, longitude);
 //                            if (address != null) {
 //                                showDialog(address);
 //                            }
@@ -234,6 +234,7 @@ public class ProceedActivity extends AppCompatActivity {
                 Log.e("LONGITUDE****", "" + longitude);
                 String address = data.getStringExtra(LOCATION_ADDRESS);
                 Log.e("ADDRESS****", "" + address);
+                getAddressFromLatLng(latitude,longitude);
                 if (address != null) {
                     showDialog(address);
                 }
@@ -241,16 +242,33 @@ public class ProceedActivity extends AppCompatActivity {
         }
     }
 
-    public String getAddressFromLatLng(double latitude, double longitude) {
+    public void getAddressFromLatLng(double latitude, double longitude) {
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(ProceedActivity.this, Locale.getDefault());
         try {
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            return addresses.get(0).getAddressLine(0);
+            String getAdminArea = addresses.get(0).getAdminArea();
+            String getCountryCode = addresses.get(0).getCountryCode();
+            String getCountryName = addresses.get(0).getCountryName();
+            String getFeatureName = addresses.get(0).getFeatureName();
+            String getLocality = addresses.get(0).getLocality();
+            String getPhone = addresses.get(0).getPhone();
+            String getPostalCode = addresses.get(0).getPostalCode();
+            String getPremises = addresses.get(0).getPremises();
+            String getSubAdminArea = addresses.get(0).getSubAdminArea();
+
+            Log.e("getAdminArea",getAdminArea);
+            Log.e("getCountryCode",getCountryCode);
+            Log.e("getCountryName",getCountryName);
+            Log.e("getFeatureName",getFeatureName);
+            Log.e("getLocality",getLocality);
+            Log.e("getPhone",getPhone);
+            Log.e("getPostalCode",getPostalCode);
+            Log.e("getPremises",getPremises);
+            Log.e("getSubAdminArea",getSubAdminArea);
         } catch (Exception e) {
             e.printStackTrace();
-            return "";
         }
     }
 
@@ -277,26 +295,26 @@ public class ProceedActivity extends AppCompatActivity {
 
         txt_address.setText("" + address);
 
-        radio_home.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    str_address_type = buttonView.getText().toString();
-                }
-            }
-        });
-        radio_work.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    str_address_type = buttonView.getText().toString();
-                }
-            }
-        });
+//        radio_home.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (radio_home.isChecked()) {
+//                    str_address_type = "Home";
+//                }
+//            }
+//        });
+//        radio_work.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+//                if (radio_work.isChecked()) {
+//                    str_address_type = "Work";
+//                }
+//            }
+//        });
         radio_other.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                if (radio_other.isChecked()) {
                     edt_own.setVisibility(View.VISIBLE);
                 } else {
                     edt_own.setVisibility(View.GONE);
@@ -313,27 +331,44 @@ public class ProceedActivity extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                str_address_type = edt_own.getText().toString();
+                if (radio_home.isChecked()){
+                    str_address_type = "Home";
+                }
+                else if (radio_work.isChecked()){
+                    str_address_type = "Work";
+                }else {
+                    str_address_type = edt_own.getText().toString();
+                }
+
                 String adds_name = edt_addsName.getText().toString();
                 String adds_mob = edt_addsMobile.getText().toString();
                 if (adds_name.equalsIgnoreCase("")) {
                     adds_name = str_firstname;
-                } else if (edt_addsMobile.getText().toString().equalsIgnoreCase("")) {
+                } if (edt_addsMobile.getText().toString().equalsIgnoreCase("")) {
                     adds_mob = str_mobile;
-                } else if (radio_other.isChecked()) {
+                }
+                if (radio_other.isChecked()) {
                     if (edt_own.getText().toString().equalsIgnoreCase("")) {
                         Toast.makeText(ProceedActivity.this, "Please enter Address Name", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    alertDialog.dismiss();
-                    cardview.setVisibility(View.VISIBLE);
+                    }else {
+                        alertDialog.dismiss();
+                        cardview.setVisibility(View.VISIBLE);
 //                    Toast.makeText(ProceedActivity.this, "Very good", Toast.LENGTH_SHORT).show();
-                    Prefs.with(ProceedActivity.this).save("adds_name", adds_name);
-                    Prefs.with(ProceedActivity.this).save("adds_mobile", adds_mob);
-                    Prefs.with(ProceedActivity.this).save("adds_type", str_address_type);
-                    Prefs.with(ProceedActivity.this).save("adds_adds", address);
-                    setAddress();
+                        Prefs.with(ProceedActivity.this).save("adds_name", adds_name);
+                        Prefs.with(ProceedActivity.this).save("adds_mobile", adds_mob);
+                        Prefs.with(ProceedActivity.this).save("adds_type", str_address_type);
+                        Prefs.with(ProceedActivity.this).save("adds_adds", address);
+                        setAddress();
+                    }
                 }
+                alertDialog.dismiss();
+                cardview.setVisibility(View.VISIBLE);
+//                    Toast.makeText(ProceedActivity.this, "Very good", Toast.LENGTH_SHORT).show();
+                Prefs.with(ProceedActivity.this).save("adds_name", adds_name);
+                Prefs.with(ProceedActivity.this).save("adds_mobile", adds_mob);
+                Prefs.with(ProceedActivity.this).save("adds_type", str_address_type);
+                Prefs.with(ProceedActivity.this).save("adds_adds", address);
+                setAddress();
             }
         });
         alertDialog.show();
@@ -440,103 +475,102 @@ public class ProceedActivity extends AppCompatActivity {
         AppControler.getInstance().addToRequestQueue(jsonObjReq, "get_profile");
     }
 
+    private void setProfile(){
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
+        dialog.show();
 
-//    private void saveAddress(){
-//        ProgressDialog dialog = new ProgressDialog(this);
-//        dialog.setMessage("Loading...");
-//        dialog.show();
-//
-//        JSONObject jsonParams = null;
-//        try {
-//            jsonParams = new JSONObject();
-//            JSONObject object = new JSONObject();
+        JSONObject jsonParams = null;
+        try {
+            jsonParams = new JSONObject();
+            JSONObject object = new JSONObject();
 //            object.put("editOn",editOn);
 //            object.put("email",edt_email.getText().toString());
 //            object.put("firstName",edt_firstName.getText().toString());
 //            object.put("lastName",edt_lastName.getText().toString());
-//
-//            JSONArray array = new JSONArray();
-////            if (profile.getAddressess().size()==0){
-////                JSONObject object1 = new JSONObject();
-////                object1.put("addressType","0");
-////                object1.put("country","India");
-////                object1.put("province","Karnataka");
-////                object1.put("city","Bangalore");
-////                array.put(object1);
-////            }else {
-//            JSONObject object1 = new JSONObject();
-////                object1.put("addressId","");
-//            object1.put("addressType","0");
-//            object1.put("country",edt_country.getText().toString());
-//            object1.put("province",edt_province.getText().toString());
-//            object1.put("city",edt_city.getText().toString());
-//            object1.put("pin",edt_pincode.getText().toString());
-//            object1.put("address1",edt_address1.getText().toString());
-//            object1.put("address2",edt_address2.getText().toString());
-//            object1.put("landmark",edt_landmark.getText().toString());
-//            object1.put("geoLocLat","12.80");
-//            object1.put("geoLocLon","78.60");
-//            array.put(object1);
-////            }
-//
-//            object.put("addressess",array);
-//            jsonParams.put("request",object);
-//
-//            Log.e("jsonParams",""+jsonParams);
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//
-//        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
-//                Constants.BASE_URL + "/customer/profile", jsonParams, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                dialog.dismiss();
-//                Log.e("setProfile",""+response);
-//                try {
-//                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
-//                    JSONObject jsonObject2 = jsonObject.getJSONObject("response");
-//                    String code = jsonObject2.optString("code");
-//                    String message = jsonObject2.optString("message");
-//                    Toast.makeText(ProfileActivity.this, message, Toast.LENGTH_SHORT).show();
-//                    if (code.equalsIgnoreCase("OK")){
-//                        JSONObject object = jsonObject2.getJSONObject("data");
-//                    }else {
-//                        Log.e("not OK","-->");
-//                    }
-//
-//                } catch (JSONException e) {
-//                    Log.e("JSONException",""+e);
-//                    e.printStackTrace();
-//                }
+
+            JSONArray array = new JSONArray();
+//            if (profile.getAddressess().size()==0){
+//                JSONObject object1 = new JSONObject();
+//                object1.put("addressType","0");
+//                object1.put("country","India");
+//                object1.put("province","Karnataka");
+//                object1.put("city","Bangalore");
+//                array.put(object1);
+//            }else {
+            JSONObject object1 = new JSONObject();
+//                object1.put("addressId","");
+            object1.put("addressType","0");
+            object1.put("country","");
+            object1.put("province","");
+            object1.put("city","");
+            object1.put("pin","");
+            object1.put("address1","");
+            object1.put("address2","");
+            object1.put("landmark","");
+            object1.put("geoLocLat","");
+            object1.put("geoLocLon","");
+            array.put(object1);
 //            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                dialog.dismiss();
-//                Log.e("F_res", "" + error);
-//                NetworkResponse networkResponse = error.networkResponse;
-//                String errorMessage = "Failed to connect to server";
-//                if (networkResponse == null) {
-//                    if (error.getClass().equals(TimeoutError.class)) {
-//                        errorMessage = "Request timeout";
-//                    } else if (error.getClass().equals(NoConnectionError.class)) {
-//                        errorMessage = "Failed to connect to server";
-//                    }
-//                }
-//                //new ShowToast(LoginActivity.this,""+errorMessage).show();
-//            }
-//        }) {
-//            @Override
-//            public Map<String, String> getHeaders() throws AuthFailureError {
-//                HashMap<String, String> headers = new HashMap<String, String>();
-//                headers.put("Content-Type", "application/json");
-//                headers.put("token", Prefs.with(ProceedActivity.this).getString("token", ""));
-//                return headers;
-//            }
-//
-//        };
-//        AppControler.getInstance().addToRequestQueue(jsonObjReq, "set_profile");
-//    }
+
+            object.put("addressess",array);
+            jsonParams.put("request",object);
+
+            Log.e("jsonParams",""+jsonParams);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.PUT,
+                Constants.BASE_URL + "/customer/profile", jsonParams, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                dialog.dismiss();
+                Log.e("setProfile",""+response);
+                try {
+                    JSONObject jsonObject = new JSONObject(String.valueOf(response));
+                    JSONObject jsonObject2 = jsonObject.getJSONObject("response");
+                    String code = jsonObject2.optString("code");
+                    String message = jsonObject2.optString("message");
+                    Toast.makeText(ProceedActivity.this, message, Toast.LENGTH_SHORT).show();
+                    if (code.equalsIgnoreCase("OK")){
+                        JSONObject object = jsonObject2.getJSONObject("data");
+                    }else {
+                        Log.e("not OK","-->");
+                    }
+
+                } catch (JSONException e) {
+                    Log.e("JSONException",""+e);
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                dialog.dismiss();
+                Log.e("F_res", "" + error);
+                NetworkResponse networkResponse = error.networkResponse;
+                String errorMessage = "Failed to connect to server";
+                if (networkResponse == null) {
+                    if (error.getClass().equals(TimeoutError.class)) {
+                        errorMessage = "Request timeout";
+                    } else if (error.getClass().equals(NoConnectionError.class)) {
+                        errorMessage = "Failed to connect to server";
+                    }
+                }
+                //new ShowToast(LoginActivity.this,""+errorMessage).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("token", Prefs.with(ProceedActivity.this).getString("token", ""));
+                return headers;
+            }
+
+        };
+        AppControler.getInstance().addToRequestQueue(jsonObjReq, "set_profile");
+    }
 
 }

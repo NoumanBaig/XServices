@@ -64,6 +64,7 @@
     <string name="order_no">Order No :</string>
     <string name="booked_on">Booked On :</string>
     <string name="my_orders">My Orders</string>
+    <string name="order_details">Order Details</string>
     <string name="rewards">Rewards</string>
     <string name="first_name">First Name</string>
     <string name="middle_name">Middle Name</string>
@@ -93,6 +94,9 @@
     <string name="redeem">Redeem</string>
     <string name="earn">Earn</string>
     <string name="history">History</string>
+    <string name="reschedule">Reschedule</string>
+    <string name="payment_dts">Payment Details</string>
+    <string name="total_amount">Total Amount</string>
     <!--<string name="total_pay_amt"></string>-->
 
 

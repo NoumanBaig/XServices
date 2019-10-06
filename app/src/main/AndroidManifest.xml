@@ -20,7 +20,8 @@
         android:testOnly="false"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.RewardsActivity"></activity>
+        <activity android:name=".activities.OrderDetailsActivity"></activity>
+        <activity android:name=".activities.RewardsActivity" />
         <activity android:name=".activities.ProfileActivity" />
         <activity android:name=".activities.MyOrdersActivity" />
         <activity android:name=".activities.OrderSummaryActivity" />

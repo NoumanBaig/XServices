@@ -113,7 +113,6 @@
                     android:layout_height="wrap_content">
 
 
-
                         <com.hss.xservices.utils.CustomFontTextView
                             android:text="@string/service_desc2"
                             android:textColor="@color/colorPrimary"
